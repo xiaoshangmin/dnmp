@@ -1,6 +1,6 @@
 FROM php:7.4-fpm-alpine
 
-MAINTAINER xiaoshangmin
+LABEL  maintainer="778900778@qq.com"
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
 
@@ -21,4 +21,5 @@ RUN curl -o /usr/bin/composer https://mirrors.aliyun.com/composer/composer.phar 
     && chmod +x /usr/bin/composer \
     && composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
+USER www-data
 WORKDIR /var/www/html
