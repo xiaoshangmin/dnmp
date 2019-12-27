@@ -1,6 +1,6 @@
 FROM redis:5.0.7
 
-MAINTAINER xiaoshangmin
+LABEL  maintainer="778900778@qq.com"
 
 COPY redis.conf /etc/redis.conf
 

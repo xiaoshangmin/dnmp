@@ -1,3 +1,3 @@
 FROM mysql:8.0.18
 
-MAINTAINER xiaoshangmin
+LABEL maintainer="778900778@qq.com"
