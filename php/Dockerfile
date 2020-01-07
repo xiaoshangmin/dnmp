@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine
+FROM php:7.4.1-fpm-alpine
 
 LABEL  maintainer="778900778@qq.com"
 
