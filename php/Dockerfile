@@ -1,4 +1,4 @@
-FROM php:7.4.1-fpm-alpine
+FROM php:7.4.2-fpm-alpine
 
 LABEL  maintainer="778900778@qq.com"
 
@@ -9,7 +9,7 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 RUN apk add --no-cache libstdc++ ${PHPIZE_DEPS}  freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev libzip-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \    
-    && docker-php-ext-install  -j$(nproc) gd sockets pdo pdo_mysql zip opcache  \   
+    && docker-php-ext-install  -j$(nproc) gd sockets pdo pdo_mysql zip opcache pcntl \   
     && pecl install redis-5.1.1 \ 
     && pecl install swoole-4.4.12 \
     && docker-php-ext-enable redis swoole \
