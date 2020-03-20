@@ -8,7 +8,7 @@ apk add --no-cache icu gettext imagemagick libzip libbz2 libxml2-utils openldap-
       libpq tidyhtml imap-dev libmemcached libssh2 libevent libev lua \
 
 docker-php-ext-configure gd --with-freetype --with-jpeg
-docker-php-ext-install -j$(nproc) gd 
+docker-php-ext-install -j$(nproc) gd
 docker-php-ext-install -j$(nproc) pcntl
 docker-php-ext-install -j$(nproc) pdo_mysql
 docker-php-ext-install -j$(nproc) mysqli

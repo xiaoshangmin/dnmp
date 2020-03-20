@@ -1,5 +1,5 @@
 FROM nginx:1.17
 
-LABEL  maintainer="778900778@qq.com"
+LABEL  maintainer="shangminxiao@gmail.com"
 
 WORKDIR /var/www/html

@@ -1,7 +1,6 @@
 version: "3"
 services:
     php:
-      # build: ./php
       image: xiaoshangmin/php-fpm:7.4.2
       container_name: php
       ports:
@@ -14,7 +13,6 @@ services:
         - ./www:/var/www/html 
     nginx:
       build: ./nginx
-      # image: nginx:1.17
       container_name: nginx
       ports: 
         - "80:80"
@@ -25,7 +23,6 @@ services:
         - ./logs/nginx:/var/log/nginx
         - ./www:/var/www/html
     mysql:
-      # build: ./mysql
       image: mysql:8.0.18
       container_name: mysql
       ports: 
@@ -36,7 +33,6 @@ services:
       environment:
         MYSQL_ROOT_PASSWORD: root
     redis:
-      # build: ./redis
       image: redis:5.0.7
       container_name: redis
       ports: 
