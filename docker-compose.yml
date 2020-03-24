@@ -1,7 +1,7 @@
 version: "3"
 services:
     php:
-      image: xiaoshangmin/php-fpm:7.4.2
+      image: xiaoshangmin/php-fpm:7.4.3
       container_name: php
       ports:
         - "9000:9000"
