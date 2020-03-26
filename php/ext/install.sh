@@ -8,16 +8,7 @@ apk add --no-cache icu gettext imagemagick libzip libbz2 libxml2-utils openldap-
       libpq tidyhtml imap-dev libmemcached libssh2 libevent libev lua git \
 
 docker-php-ext-configure gd --with-freetype --with-jpeg
-docker-php-ext-install -j$(nproc) gd
-docker-php-ext-install -j$(nproc) pcntl
-docker-php-ext-install -j$(nproc) pdo_mysql
-docker-php-ext-install -j$(nproc) mysqli
-docker-php-ext-install -j$(nproc) exif
-docker-php-ext-install -j$(nproc) sockets
-docker-php-ext-install -j$(nproc) gettext
-docker-php-ext-install -j$(nproc) intl
-docker-php-ext-install -j$(nproc) soap
-docker-php-ext-install opcache
+docker-php-ext-install -j$(nproc) gd pcntl pdo_mysql mysqli exif sockets gettext intl soap bcmath opcache
 
 extName="redis"
 mkdir ${extName}
