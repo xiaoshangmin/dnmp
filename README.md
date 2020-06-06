@@ -18,11 +18,48 @@ DNMP（Docker + Nginx + MySQL + PHP + Redis）
 └── docker-compose.yml          Docker 服务配置示例文件
 ```
 
+## 1.1 PHP已安装扩展
+```
+bcmath
+curl  
+exif  
+gd
+gettext  
+intl 
+mbstring
+mysqli
+mysqlnd
+openssl
+pcntl
+PDO
+pdo_mysql
+pdo_sqlite  
+redis 
+soap
+sockets
+swoole
+opcache
+```
+
 ## 2.快速使用
 ```
     git clone https://github.com/xiaoshangmin/dnmp.git      # clone 项目
     cd dnmp                                                 # 进入项目目录
     docker-compose up                                       # 启动项目
+    docker-compose up -d                                    # 守护进程模式运行
 ```
     在浏览器中访问：`http://localhost`，PHP代码在文件`./www/index.php`。
     ./www/index.php  有简单的示例代码
+
+## 2.1 数据库
+```
+    root:root
+```
+
+### 2.2 phpfpm容器
+    docker exec -it php sh #进入容器
+    # 修改composer 源
+    composer config -g secure-http false 
+    composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ 
+    cd /var/www/html  #网站目录
+    
