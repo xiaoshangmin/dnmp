@@ -5,7 +5,7 @@ apk add -U --no-cache --virtual temp g++ file re2c make autoconf zlib-dev libtoo
     freetype freetype-dev libpng libjpeg-turbo  libjpeg-turbo-dev
 # prod deps
 apk add --no-cache icu gettext imagemagick libzip libbz2 libxml2-utils openldap-back-mdb openldap yaml \
-      libpq tidyhtml imap-dev libmemcached libssh2 libevent libev lua git \
+      libpq tidyhtml imap-dev libmemcached libssh2 libevent libev lua git busybox-suid \
 
 docker-php-ext-configure gd --with-freetype --with-jpeg
 docker-php-ext-install -j$(nproc) gd pcntl pdo_mysql mysqli exif sockets gettext intl soap bcmath opcache zip 
