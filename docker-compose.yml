@@ -12,7 +12,8 @@ services:
         - ./logs/php:/var/log/php
         - ./www:/var/www/html 
     nginx:
-      build: ./nginx
+#      build: ./nginx
+      image: xiaoshangmin/nginx:1.17
       container_name: nginx
       ports: 
         - "80:80"
