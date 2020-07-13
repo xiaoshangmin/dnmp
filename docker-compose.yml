@@ -12,7 +12,7 @@ services:
       - ./logs/php:/var/log/php
       - ./www:/var/www/html 
   openresty:
-    image: openresty/openresty:1.17.8.1-centos
+    image: xiaoshangmin/openresty:1.17.8.1-centos
     container_name: openresty
     ports:
       - "80:80"
@@ -21,7 +21,7 @@ services:
       - ./nginx/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./logs/nginx:/var/log/nginx
-      - ./www:/usr/local/openresty/nginx/html
+      - ./www:/var/www/html
   # nginx:
   #   image: xiaoshangmin/nginx:1.17
   #   container_name: nginx
