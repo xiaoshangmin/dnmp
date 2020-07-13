@@ -1,4 +1,4 @@
-DNMP（Docker + Nginx + MySQL + PHP + Redis）
+DNMP（Docker + Openresty + MySQL + PHP + Redis）
 
 ## 1.目录结构
 
