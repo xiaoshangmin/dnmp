@@ -1,5 +1,4 @@
 <?php
-sleep(10);
 phpinfo();
 // 连接Redis
 //$redis = new Redis();

@@ -13,7 +13,7 @@ services:
       - ./logs/php:/var/log/php
       - ./www:/var/www/html 
   openresty:
-    image: xiaoshangmin/openresty:1.17.8.1-centos
+    image: xiaoshangmin/openresty
     container_name: openresty
     ports:
       - "80:80"
