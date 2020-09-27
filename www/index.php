@@ -1,5 +1,6 @@
 <?php
-phpinfo();
+echo $_SERVER['SERVER_ADDR'];
+//phpinfo();
 // 连接Redis
 //$redis = new Redis();
 //$redis->connect('redis', 6379);

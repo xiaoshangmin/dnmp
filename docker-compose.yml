@@ -43,3 +43,16 @@ services:
     volumes:
       - ./data/redis:/data
       - ./redis/redis.conf:/etc/redis.conf
+  rabbitmq:
+    image: rabbitmq:3.8.9-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./data/rabbitmq:/var/lib/rabbitmq
+      - ./logs/rabbitmq:/var/log/rabbitmq
+      - ./rabbitmq/etc/:/etc/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
