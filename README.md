@@ -1,4 +1,4 @@
-DNMP（Docker + Openresty + MySQL + PHP + Redis）
+DNMP（Docker + Openresty + MySQL + PHP + Redis + RabbitMQ）
 
 ## 1.目录结构
 
@@ -62,4 +62,6 @@ opcache
     composer config -g secure-http false 
     composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ 
     cd /var/www/html  #网站目录
-    
+
+## 2.3 rabbitmq
+    在浏览器中访问：`http://localhost:15672`，帐号密码：admin:admin
