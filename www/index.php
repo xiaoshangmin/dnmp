@@ -1,7 +1,7 @@
 <?php
-echo $_SERVER['SERVER_ADDR'];
-//phpinfo();
-sleep(10);
+// echo $_SERVER['SERVER_ADDR'];
+phpinfo();
+// sleep(10);
 // phpinfo();
 // 连接Redis
 //$redis = new Redis();
