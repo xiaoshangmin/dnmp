@@ -47,6 +47,10 @@ opcache
     cd dnmp                                                 # 进入项目目录
     docker-compose up                                       # 启动项目
     docker-compose up -d                                    # 守护进程模式运行
+    国内下载替换docker源
+    {
+        "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+    }
 ```
     在浏览器中访问：`http://localhost`，PHP代码在文件`./www/index.php`。
     ./www/index.php  有简单的示例代码
