@@ -1,5 +1,6 @@
 <?php
 // echo $_SERVER['SERVER_ADDR'];
+// sleep(5);
 phpinfo();
 // sleep(10);
 // phpinfo();

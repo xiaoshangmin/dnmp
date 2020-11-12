@@ -3,6 +3,7 @@ services:
   php:
     image: xiaoshangmin/php:7.4.9
     container_name: php
+    restart: always
     ports:
       - "9000:9000"
       - "9501:9501"
@@ -28,6 +29,7 @@ services:
   mysql:
     image: mysql:8.0.18
     container_name: mysql
+    restart: always
     command: --default-authentication-plugin=mysql_native_password
     ports:
       - "3306:3306"
@@ -40,6 +42,7 @@ services:
   redis:
     image: redis:5.0.7
     container_name: redis
+    restart: always
     ports:
       - "6379:6379"
     volumes:
