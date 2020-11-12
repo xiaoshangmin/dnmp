@@ -37,6 +37,7 @@ services:
       - ./mysql/my.cnf:/etc/mysql/my.cnf
       - ./mysql/conf.d:/etc/mysql/conf.d
       - ./data/mysql:/var/lib/mysql
+      - ./logs/mysql/mysql.log:/var/lib/mysql/mysql.error.log
     environment:
       MYSQL_ROOT_PASSWORD: root
   redis:
