@@ -1,21 +1,30 @@
-DNMP（Docker + Openresty + MySQL + PHP + Redis + RabbitMQ）
-
+DNMP（Docker + Openresty + MySQL + PHP + Redis）
+RabbitMQ
+ELK+FILEBEAT
 ## 1.目录结构
 
 ```
-/
 ├── data                        数据库数据目录
+│   ├── esdata                  elasticsearch 数据目录
 │   ├── mysql                   MySQL8 数据目录
+│   ├── rabbitmq                rabbitmq 数据目录
 │   └── redis                   redis 数据目录
+├── elk                         elk+filebeat 配置文件
+│   ├── es                      elasticsearch 配置文件
+│   ├── filebeat                filebeat 配置文件
+│   ├── kibana                  kibana 配置文件
+│   └── logstash                logstash 配置文件
 ├── logs                        日志目录
 │   ├── nginx                   nginx 日志
 │   └── php                     php 日志
+│   └── rabbitmq                rabbitmq 日志
 ├── mysql                       mysql配置文件
 ├── nginx                       nginx配置文件
 ├── php                         php配置文件
+├── rabbitmq                    rabbitmq配置文件
 ├── redis                       redis配置文件
 ├── www                         PHP 代码目录
-└── docker-compose.yml          Docker 服务配置示例文件
+└── docker-compose.yml          docker-compose 配置示例文件
 ```
 
 ## 1.1 PHP已安装扩展
@@ -69,3 +78,6 @@ opcache
 
 ## 2.3 rabbitmq
     在浏览器中访问：`http://localhost:15672`，帐号密码：admin:admin
+
+## 2.4 kibana
+    在浏览器中访问：`http://localhost:5601`

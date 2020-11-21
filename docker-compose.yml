@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 services:
   php:
     image: xiaoshangmin/php:7.4.9
@@ -8,24 +8,29 @@ services:
       - "9000:9000"
       - "9501:9501"
     volumes:
-      - ./php/etc:/usr/local/etc
-      - ./php/etc/php/php.ini:/usr/local/etc/php/php.ini
-      - ./php/etc/php-fpm.conf:/usr/local/etc/php-fpm.conf
-      - ./php/etc/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./logs/php:/var/log/php
-      - ./www:/var/www/html 
+      - ./php/etc:/usr/local/etc:ro
+      - ./php/etc/php/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./php/etc/php-fpm.conf:/usr/local/etc/php-fpm.conf:ro
+      - ./php/etc/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - ./logs/php:/var/log/php:rw
+      - ./www:/var/www/html:rw
+    networks: 
+      - "default"
   openresty:
     image: xiaoshangmin/openresty
     container_name: openresty
+    restart: always
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/cert:/etc/nginx/cert
-      - ./logs/nginx:/var/log/nginx
-      - ./www:/var/www/html
+      - ./nginx/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
+      - ./nginx/conf.d/:/etc/nginx/conf.d/:rw
+      - ./nginx/cert:/etc/nginx/cert:ro
+      - ./logs/nginx:/var/log/nginx:rw
+      - ./www:/var/www/html:rw
+    networks: 
+      - "default"
   mysql:
     image: mysql:8.0.18
     container_name: mysql
@@ -34,11 +39,13 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
-      - ./mysql/conf.d:/etc/mysql/conf.d
-      - ./data/mysql:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf:ro
+      - ./mysql/conf.d:/etc/mysql/conf.d:ro
+      - ./data/mysql:/var/lib/mysql:rw
     environment:
       MYSQL_ROOT_PASSWORD: root
+    networks: 
+      - "default"
   redis:
     image: redis:5.0.7
     container_name: redis
@@ -46,18 +53,79 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - ./data/redis:/data
-      - ./redis/redis.conf:/etc/redis.conf
+      - ./data/redis:/data:rw
+      - ./redis/redis.conf:/etc/redis.conf:ro
+    networks: 
+      - "default"
   rabbitmq:
     image: xiaoshangmin/rabbitmq
     container_name: rabbitmq
+    restart: always
     ports:
       - "5672:5672"
       - "15672:15672"
     volumes:
-      - ./data/rabbitmq:/var/lib/rabbitmq/mnesia
-      - ./logs/rabbitmq:/var/log/rabbitmq
-      - ./rabbitmq/etc/:/etc/rabbitmq
+      - ./data/rabbitmq:/var/lib/rabbitmq/mnesia:rw
+      - ./logs/rabbitmq:/var/log/rabbitmq:rw
+      - ./rabbitmq/etc/:/etc/rabbitmq:rw
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=admin
+    networks: 
+      - "default"
+  elasticsearch:
+    image: elasticsearch:7.9.3
+    container_name: elasticsearch
+    hostname: elasticsearch
+    volumes: 
+      - ./data/esdata:/usr/share/elasticsearch/data:rw
+      - ./elk/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    ports:
+      - 9200:9200
+    networks:
+      - "default"
+  filebeat:
+    image: elastic/filebeat:7.9.3
+    container_name: filebeat
+    user: root
+    volumes:
+      - ./elk/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro 
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro 
+    networks:
+      - "default"
+    depends_on:
+      - "logstash"
+  logstash:
+    image: logstash:7.9.3
+    container_name: logstash
+    hostname: logstash
+    volumes:
+      - ./elk/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+    ports:
+      - "5044:5044"
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "9600:9600"
+    networks:
+      - "default"
+  kibana:
+    image: kibana:7.9.3
+    container_name: kibana
+    hostname: kibana
+    volumes:
+      - ./elk/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    ports:
+      - "5601:5601"
+    environment: 
+      I18N_LOCALE: "zh-CN" 
+      elasticsearch.hosts: http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    networks: 
+      - "default"
+networks:
+  default:
