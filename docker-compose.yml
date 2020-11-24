@@ -57,28 +57,29 @@ services:
       - ./redis/redis.conf:/etc/redis.conf:ro
     networks: 
       - "default"
-  rabbitmq:
-    image: xiaoshangmin/rabbitmq
-    container_name: rabbitmq
-    restart: always
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    volumes:
-      - ./data/rabbitmq:/var/lib/rabbitmq/mnesia:rw
-      - ./logs/rabbitmq:/var/log/rabbitmq:rw
-      - ./rabbitmq/etc/:/etc/rabbitmq:rw
-    environment:
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=admin
-    networks: 
-      - "default"
+  # rabbitmq:
+  #   image: xiaoshangmin/rabbitmq
+  #   container_name: rabbitmq
+  #   restart: always
+  #   ports:
+  #     - "5672:5672"
+  #     - "15672:15672"
+  #   volumes:
+  #     - ./data/rabbitmq:/var/lib/rabbitmq/mnesia:rw
+  #     - ./logs/rabbitmq:/var/log/rabbitmq:rw
+  #     - ./rabbitmq/etc/:/etc/rabbitmq:rw
+  #   environment:
+  #     - RABBITMQ_DEFAULT_USER=admin
+  #     - RABBITMQ_DEFAULT_PASS=admin
+  #   networks: 
+  #     - "default"
   elasticsearch:
     image: elasticsearch:7.9.3
     container_name: elasticsearch
     hostname: elasticsearch
     volumes: 
       - ./data/esdata:/usr/share/elasticsearch/data:rw
+      - ./elk/es/plugins:/usr/share/elasticsearch/plugins:rw
       - ./elk/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
     environment:
       - discovery.type=single-node
@@ -88,23 +89,26 @@ services:
       - 9200:9200
     networks:
       - "default"
-  filebeat:
-    image: elastic/filebeat:7.9.3
-    container_name: filebeat
-    user: root
-    volumes:
-      - ./elk/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro 
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro 
-    networks:
-      - "default"
-    depends_on:
-      - "logstash"
+  # filebeat:
+  #   image: elastic/filebeat:7.9.3
+  #   container_name: filebeat
+  #   user: root
+  #   volumes:
+  #     - ./elk/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro 
+  #     - /var/lib/docker/containers:/var/lib/docker/containers:ro 
+  #   networks:
+  #     - "default"
+  #   depends_on:
+  #     - "logstash"
   logstash:
     image: logstash:7.9.3
     container_name: logstash
     hostname: logstash
     volumes:
-      - ./elk/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - ./elk/logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./elk/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+    environment:
+      LS_JAVA_OPTS: -Xmx1g -Xms1g
     ports:
       - "5044:5044"
       - "5000:5000/tcp"
