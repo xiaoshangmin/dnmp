@@ -18,7 +18,7 @@ docker-php-ext-enable ${extName}
 
 extName="swoole"
 mkdir ${extName}
-tar -xf swoole-4.5.2.tgz -C ${extName} --strip-components=1
+tar -xf swoole-4.5.9.tgz -C ${extName} --strip-components=1
 (cd ${extName} && phpize && ./configure && make -j$(nproc) && make install)
 docker-php-ext-enable ${extName}
 
