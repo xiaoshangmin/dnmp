@@ -1,6 +1,6 @@
-DNMP（Docker + Openresty + MySQL + PHP + Redis）
-RabbitMQ
-ELK+FILEBEAT
+DNMP（Docker + Openresty + MySQL + PHP + Redis）  
+RabbitMQ  
+ELK + FILEBEAT
 ## 1.目录结构
 
 ```
