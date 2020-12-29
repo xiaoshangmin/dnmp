@@ -1,3 +1,5 @@
 [mysqld]
 skip-host-cache
 skip-name-resolve
+slow-query-log-file     = /var/lib/mysql/mysql.slow.log
+log-error               = /var/lib/mysql/mysql.error.log

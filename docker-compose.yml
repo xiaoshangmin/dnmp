@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   php:
-    image: xiaoshangmin/php:7.4.9
+    image: ${PHP_VERSION}
     container_name: php
     restart: always
     ports:
@@ -14,10 +14,12 @@ services:
       - ./php/etc7.4/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
       - ./logs/php:/var/log/php:rw
       - ./www:/var/www/html:rw
+    environment:
+      TZ: "${TIMEZONE}"
     networks: 
       - "default"
   openresty:
-    image: xiaoshangmin/openresty
+    image: ${OPENRESTY_VERSION}
     container_name: openresty
     restart: always
     ports:
@@ -29,25 +31,29 @@ services:
       - ./nginx/cert:/etc/nginx/cert:ro
       - ./logs/nginx:/var/log/nginx:rw
       - ./www:/var/www/html:rw
+    environment:
+      TZ: "${TIMEZONE}"
     networks: 
       - "default"
   mysql:
-    image: mysql:8.0.18
+    image: ${MYSQL_VERSION}
     container_name: mysql
     restart: always
-    command: --default-authentication-plugin=mysql_native_password
+    command: 
+      - '--default-authentication-plugin=mysql_native_password'
+      - '--character-set-server=utf8mb4'
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql/my.cnf:/etc/mysql/my.cnf:ro
-      - ./mysql/conf.d:/etc/mysql/conf.d:ro
+      - ./mysql/conf.d:/etc/mysql/conf.d
       - ./data/mysql:/var/lib/mysql:rw
     environment:
       MYSQL_ROOT_PASSWORD: root
+      TZ: "${TIMEZONE}"
     networks: 
       - "default"
   redis:
-    image: redis:5.0.7
+    image: ${REDIS_VERSION}
     container_name: redis
     restart: always
     ports:
@@ -55,81 +61,83 @@ services:
     volumes:
       - ./data/redis:/data:rw
       - ./redis/redis.conf:/etc/redis.conf:ro
+    environment:
+      TZ: "${TIMEZONE}"
     networks: 
       - "default"
-  # rabbitmq:
-  #   image: xiaoshangmin/rabbitmq
-  #   container_name: rabbitmq
-  #   restart: always
-  #   ports:
-  #     - "5672:5672"
-  #     - "15672:15672"
-  #   volumes:
-  #     - ./data/rabbitmq:/var/lib/rabbitmq/mnesia:rw
-  #     - ./logs/rabbitmq:/var/log/rabbitmq:rw
-  #     - ./rabbitmq/etc/:/etc/rabbitmq:rw
-  #   environment:
-  #     - RABBITMQ_DEFAULT_USER=admin
-  #     - RABBITMQ_DEFAULT_PASS=admin
-  #   networks: 
-  #     - "default"
-  # elasticsearch:
-  #   image: elasticsearch:7.9.3
-  #   container_name: elasticsearch
-  #   hostname: elasticsearch
-  #   volumes: 
-  #     - ./data/esdata:/usr/share/elasticsearch/data:rw
-  #     - ./elk/es/plugins:/usr/share/elasticsearch/plugins:rw
-  #     - ./elk/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-  #   environment:
-  #     - discovery.type=single-node
-  #     - bootstrap.memory_lock=true
-  #     - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-  #   ports:
-  #     - 9200:9200
-  #   networks:
-  #     - "default"
-  # filebeat:
-  #   image: elastic/filebeat:7.9.3
-  #   container_name: filebeat
-  #   user: root
-  #   volumes:
-  #     - ./elk/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro 
-  #     - /var/lib/docker/containers:/var/lib/docker/containers:ro 
-  #   networks:
-  #     - "default"
-  #   depends_on:
-  #     - "logstash"
-#   logstash:
-#     image: logstash:7.9.3
-#     container_name: logstash
-#     hostname: logstash
-#     volumes:
-#       - ./elk/logstash/pipeline:/usr/share/logstash/pipeline:ro
-#       - ./elk/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-#     environment:
-#       LS_JAVA_OPTS: -Xmx1g -Xms1g
-#     ports:
-#       - "5044:5044"
-#       - "5000:5000/tcp"
-#       - "5000:5000/udp"
-#       - "9600:9600"
-#     networks:
-#       - "default"
-#   kibana:
-#     image: kibana:7.9.3
-#     container_name: kibana
-#     hostname: kibana
-#     volumes:
-#       - ./elk/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
-#     ports:
-#       - "5601:5601"
-#     environment: 
-#       I18N_LOCALE: "zh-CN" 
-#       elasticsearch.hosts: http://elasticsearch:9200
-#     depends_on:
-#       - elasticsearch
-#     networks: 
-#       - "default"
-# networks:
-#   default:
+  rabbitmq:
+    image: xiaoshangmin/rabbitmq
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./data/rabbitmq:/var/lib/rabbitmq/mnesia:rw
+      - ./logs/rabbitmq:/var/log/rabbitmq:rw
+      - ./rabbitmq/etc/:/etc/rabbitmq:rw
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    networks: 
+      - "default"
+  elasticsearch:
+    image: elasticsearch:7.9.3
+    container_name: elasticsearch
+    hostname: elasticsearch
+    volumes: 
+      - ./data/esdata:/usr/share/elasticsearch/data:rw
+      - ./elk/es/plugins:/usr/share/elasticsearch/plugins:rw
+      - ./elk/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    ports:
+      - 9200:9200
+    networks:
+      - "default"
+  filebeat:
+    image: elastic/filebeat:7.9.3
+    container_name: filebeat
+    user: root
+    volumes:
+      - ./elk/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro 
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro 
+    networks:
+      - "default"
+    depends_on:
+      - "logstash"
+  logstash:
+    image: logstash:7.9.3
+    container_name: logstash
+    hostname: logstash
+    volumes:
+      - ./elk/logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./elk/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+    environment:
+      LS_JAVA_OPTS: -Xmx1g -Xms1g
+    ports:
+      - "5044:5044"
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "9600:9600"
+    networks:
+      - "default"
+  kibana:
+    image: kibana:7.9.3
+    container_name: kibana
+    hostname: kibana
+    volumes:
+      - ./elk/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    ports:
+      - "5601:5601"
+    environment: 
+      I18N_LOCALE: "zh-CN" 
+      elasticsearch.hosts: http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    networks: 
+      - "default"
+networks:
+  default:
