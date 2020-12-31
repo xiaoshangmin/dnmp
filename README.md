@@ -5,8 +5,10 @@ ELK + FILEBEAT
 
 ```
 ├── data                        数据库数据目录
+│   ├── composer                composer 数据目录
 │   ├── esdata                  elasticsearch 数据目录
 │   ├── mysql                   MySQL8 数据目录
+│   ├── mysql5                  MySQL5 数据目录
 │   ├── rabbitmq                rabbitmq 数据目录
 │   └── redis                   redis 数据目录
 ├── elk                         elk+filebeat 配置文件
@@ -18,36 +20,61 @@ ELK + FILEBEAT
 │   ├── nginx                   nginx 日志
 │   └── php                     php 日志
 │   └── rabbitmq                rabbitmq 日志
-├── mysql                       mysql配置文件
+├── mysql                       mysql8配置文件
+├── mysql5                      mysql5配置文件
 ├── nginx                       nginx配置文件
-├── php                         php配置文件
+├── php7.2                      php7.2配置文件
+├── php7.4                      php7.4配置文件
 ├── rabbitmq                    rabbitmq配置文件
 ├── redis                       redis配置文件
 ├── www                         PHP 代码目录
 └── docker-compose.yml          docker-compose 配置示例文件
 ```
 
-## 1.1 PHP已安装扩展
+## 1.1 php -m
 ```
-bcmath
-curl  
-exif  
-gd
-gettext  
-intl 
+bcmath       
+Core
+ctype        
+curl
+date
+dom
+exif
+fileinfo
+filter
+ftp
+hash
+iconv
+json
+libxml
 mbstring
 mysqli
 mysqlnd
 openssl
 pcntl
+pcre
 PDO
 pdo_mysql
-pdo_sqlite  
-redis 
-soap
+pdo_sqlite
+Phar
+posix
+readline
+redis
+Reflection
+session
+SimpleXML
 sockets
+sodium
+SPL
+sqlite3
+standard
 swoole
-opcache
+tokenizer
+xml
+xmlreader
+xmlwriter
+Zend OPcache
+zlib
 ```
 
 ## 2.快速使用

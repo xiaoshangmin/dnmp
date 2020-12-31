@@ -8,10 +8,9 @@ services:
       - "9000:9000"
       - "9501:9501"
     volumes:
-      - ./php/etc7.2:/usr/local/etc:ro
-      - ./php/etc7.2/php/php.ini:/usr/local/etc/php/php.ini:ro
-      - ./php/etc7.2/php-fpm.conf:/usr/local/etc/php-fpm.conf:ro
-      - ./php/etc7.2/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - ${PHP_CONF_DIR}/php.ini:/usr/local/etc/php/php.ini:ro
+      - ${PHP_CONF_DIR}/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - ${DATA_DIR}/composer:/tmp/composer
       - ./logs/php:/var/log/php:rw
       - ./www:/var/www/html:rw
     environment:
