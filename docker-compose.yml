@@ -43,8 +43,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql5/conf.d:/etc/mysql/conf.d
-      - ./data/mysql5:/var/lib/mysql:rw
+      - ./mysql/conf.d:/etc/mysql/conf.d
+      - ./data/mysql:/var/lib/mysql:rw
     environment:
       MYSQL_ROOT_PASSWORD: root
       TZ: "${TIMEZONE}"
