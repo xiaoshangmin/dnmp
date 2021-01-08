@@ -82,6 +82,7 @@ zlib
 ```
     git clone https://github.com/xiaoshangmin/dnmp.git      # clone 项目
     cd dnmp                                                 # 进入项目目录
+    cp .example.env .env                                    # 复制环境变量文件
     docker-compose up                                       # 启动项目
     docker-compose up -d                                    # 守护进程模式运行
     国内下载替换docker源
@@ -89,7 +90,7 @@ zlib
         "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
     }
 ```
-    在浏览器中访问：`http://localhost`，PHP代码在文件`./www/index.php`。
+    在浏览器中访问：`http://localhost`，PHP代码在文件`./www/index.php`。  
     ./www/index.php  有简单的示例代码
 
 ## 2.1 数据库
