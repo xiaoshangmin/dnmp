@@ -1,7 +1,7 @@
 #!/bin/sh
 apk --update add --no-cache --virtual .build-deps autoconf g++ libtool make curl-dev linux-headers libevent-dev freetype-dev  libpng-dev libjpeg-turbo-dev
 
-apk --no-cache add gettext-dev libzip-dev icu-dev freetype libpng libjpeg-turbo libwebp-dev rabbitmq-c-dev
+apk --no-cache add git gettext-dev libzip-dev icu-dev freetype libpng libjpeg-turbo libwebp-dev rabbitmq-c-dev
 
 docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp
 docker-php-ext-install -j$(nproc) gd
@@ -17,6 +17,9 @@ docker-php-ext-install -j$(nproc) bcmath
 docker-php-ext-install -j$(nproc) opcache
 docker-php-ext-install -j$(nproc) zip
  
+pecl install protobuf
+docker-php-ext-enable protobuf
+
 extName="redis"
 mkdir ${extName}
 tar -xf redis-5.2.0.tgz -C ${extName} --strip-components=1

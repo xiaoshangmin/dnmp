@@ -11,7 +11,7 @@ services:
       - ${PHP_CONF_DIR}/php.ini:/usr/local/etc/php/php.ini:ro
       - ${PHP_CONF_DIR}/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:ro
       - ${DATA_DIR}/composer:/tmp/composer
-      - ./logs/php:/var/log/php:rw
+      - ${LOG_DIR}/php:/var/log/php:rw
       - ./www:/var/www/html:rw
     environment:
       TZ: "${TIMEZONE}"
@@ -28,7 +28,7 @@ services:
       - ./nginx/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
       - ./nginx/conf.d/:/etc/nginx/conf.d/:rw
       - ./nginx/cert:/etc/nginx/cert:ro
-      - ./logs/nginx:/var/log/nginx:rw
+      - ${LOG_DIR}/nginx:/var/log/nginx:rw
       - ./www:/var/www/html:rw
     environment:
       TZ: "${TIMEZONE}"
@@ -43,10 +43,10 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql/conf.d:/etc/mysql/conf.d
-      - ./data/mysql:/var/lib/mysql:rw
+      - ${MYSQL_CONF_DIR}/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+      - ${MYSQL_LIB_DIR}:/var/lib/mysql:rw
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       TZ: "${TIMEZONE}"
     networks: 
       - "default"
@@ -57,7 +57,7 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - ./data/redis:/data:rw
+      - ${DATA_DIR}/redis:/data:rw
       - ./redis/redis.conf:/etc/redis.conf:ro
     environment:
       TZ: "${TIMEZONE}"
