@@ -1,6 +1,6 @@
 FROM php:8.0.1-fpm-alpine
 
-ARG TIMEZONE
+ARG TIMEZONE=Asia/Shanghai
 
 LABEL  maintainer="shangminxiao@gmail.com"
 
@@ -12,6 +12,11 @@ WORKDIR /tmp/ext
 RUN chmod +x install.sh \
     && sh install.sh \
     && rm -rf /tmp/ext
+
+RUN apk --no-cache add tzdata \
+    && cp "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime \
+    && echo "$TIMEZONE" > /etc/timezone \
+    && apk del tzdata
 
 RUN curl -o /usr/bin/composer https://mirrors.aliyun.com/composer/composer.phar \
     && chmod +x /usr/bin/composer \

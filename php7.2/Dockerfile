@@ -1,6 +1,6 @@
 FROM php:7.2.34-fpm-alpine
 
-ARG TIMEZONE
+ARG TIMEZONE=Asia/Shanghai
 
 LABEL  maintainer="shangminxiao@gmail.com"
 
@@ -15,7 +15,8 @@ RUN chmod +x install.sh \
 
 RUN apk --no-cache add tzdata \
     && cp "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime \
-    && echo "$TIMEZONE" > /etc/timezone 
+    && echo "$TIMEZONE" > /etc/timezone \
+    && apk del tzdata
 
 RUN apk add gnu-libiconv libstdc++ --no-cache --repository http://mirrors.aliyun.com/alpine/edge/community/ --allow-untrusted
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
