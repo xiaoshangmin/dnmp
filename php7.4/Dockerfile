@@ -1,5 +1,7 @@
 FROM php:7.4.13-fpm-alpine
 
+ARG TIMEZONE
+
 LABEL  maintainer="shangminxiao@gmail.com"
 
 RUN sed -i "s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g" /etc/apk/repositories
@@ -13,8 +15,7 @@ RUN chmod +x install.sh \
 
 RUN apk --no-cache add tzdata \
     && cp "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime \
-    && echo "$TIMEZONE" > /etc/timezone \
-    && apk del tzdata
+    && echo "$TIMEZONE" > /etc/timezone
 
 # Fix: https://github.com/docker-library/php/issues/240
 RUN apk add gnu-libiconv libstdc++ --no-cache --repository http://mirrors.aliyun.com/alpine/edge/community/ --allow-untrusted

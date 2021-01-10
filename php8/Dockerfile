@@ -1,5 +1,7 @@
 FROM php:8.0.1-fpm-alpine
 
+ARG TIMEZONE
+
 LABEL  maintainer="shangminxiao@gmail.com"
 
 RUN sed -i "s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g" /etc/apk/repositories
@@ -21,8 +23,7 @@ ENV COMPOSER_HOME=/tmp/composer
 
 RUN apk --no-cache add tzdata \
     && cp "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime \
-    && echo "$TIMEZONE" > /etc/timezone \
-    && apk del tzdata
+    && echo "$TIMEZONE" > /etc/timezone 
 
 # php image's www-data user uid & gid are 82, change them to 1000 (primary user)
 RUN apk --no-cache add shadow && usermod -u 1000 www-data && groupmod -g 1000 www-data
