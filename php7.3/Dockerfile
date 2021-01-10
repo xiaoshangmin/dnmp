@@ -11,6 +11,11 @@ RUN chmod +x install.sh \
     && sh install.sh \
     && rm -rf /tmp/ext
 
+RUN apk --no-cache add tzdata \
+    && cp "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime \
+    && echo "$TIMEZONE" > /etc/timezone \
+    && apk del tzdata
+
 RUN apk add gnu-libiconv libstdc++ --no-cache --repository http://mirrors.aliyun.com/alpine/edge/community/ --allow-untrusted
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
