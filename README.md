@@ -52,6 +52,7 @@ mbstring
 mysqli
 mysqlnd
 openssl
+protobuf
 pcntl
 pcre
 PDO
@@ -71,6 +72,7 @@ sqlite3
 standard
 swoole
 tokenizer
+yac
 xml
 xmlreader
 xmlwriter

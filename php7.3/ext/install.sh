@@ -1,7 +1,7 @@
 #!/bin/sh
 apk --update add --no-cache --virtual .build-deps autoconf g++ libtool make curl-dev linux-headers libevent-dev freetype-dev  libpng-dev libjpeg-turbo-dev
 
-apk --no-cache add git gettext-dev libzip-dev icu-dev freetype libpng libjpeg-turbo libwebp-dev rabbitmq-c-dev libxml2-dev
+apk --no-cache add git gettext-dev libzip-dev icu-dev freetype libpng libjpeg-turbo libwebp-dev rabbitmq-c-dev libxml2-dev zlib-dev
 
 docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-webp-dir=/usr/include/
 docker-php-ext-configure zip --with-libzip=/usr/include
@@ -37,11 +37,5 @@ mkdir ${extName}
 tar -xf swoole-4.5.9.tgz -C ${extName} --strip-components=1
 (cd ${extName} && phpize && ./configure && make -j$(nproc) && make install)
 docker-php-ext-enable ${extName}
-
-# extName="amqp"
-# mkdir ${extName}
-# tar -xf amqp-1.10.2.tgz -C ${extName} --strip-components=1
-# (cd ${extName} && phpize && ./configure && make -j$(nproc) && make install)
-# docker-php-ext-enable ${extName}
 
 apk del .build-deps

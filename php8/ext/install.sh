@@ -1,7 +1,7 @@
 #!/bin/sh
 apk --update add --no-cache --virtual .build-deps autoconf g++ libtool make curl-dev linux-headers libevent-dev freetype-dev  libpng-dev libjpeg-turbo-dev
 
-apk --no-cache add git gettext-dev libzip-dev icu-dev freetype libpng libjpeg-turbo libwebp-dev rabbitmq-c-dev libxml2-dev
+apk --no-cache add git gettext-dev libzip-dev icu-dev freetype libpng libjpeg-turbo libwebp-dev rabbitmq-c-dev libxml2-dev zlib-dev
 
 docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp
 docker-php-ext-install -j$(nproc) gd
@@ -17,6 +17,11 @@ docker-php-ext-install -j$(nproc) bcmath
 docker-php-ext-install -j$(nproc) opcache
 docker-php-ext-install -j$(nproc) zip
  
+pecl install yac
+docker-php-ext-enable yac
+pecl install grpc
+docker-php-ext-enable grpc
+
 extName="redis"
 mkdir ${extName}
 tar -xf redis-5.3.2.tgz -C ${extName} --strip-components=1
