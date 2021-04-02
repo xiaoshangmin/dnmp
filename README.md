@@ -20,16 +20,19 @@ ELK + FILEBEAT
 │   ├── nginx                   nginx 日志
 │   └── php                     php 日志
 │   └── rabbitmq                rabbitmq 日志
-├── mysql                       mysql8配置文件
-├── mysql5                      mysql5配置文件
-├── nginx                       nginx配置文件
-├── php7.2                      php7.2配置文件
-├── php7.3                      php7.3配置文件
-├── php7.4                      php7.4配置文件
-├── rabbitmq                    rabbitmq配置文件
-├── redis                       redis配置文件
+├── services
+│   ├── mysql                   mysql8配置文件
+│   ├── mysql5                  mysql5配置文件
+│   ├── nginx                   nginx配置文件
+│   ├── php7.2                  php7.2配置文件
+│   ├── php7.3                  php7.3配置文件
+│   ├── php7.4                  php7.4配置文件
+│   ├── php8                    php8配置文件
+│   ├── rabbitmq                rabbitmq配置文件
+│   └── redis                   redis配置文件
 ├── www                         PHP 代码目录
-└── docker-compose.yml          docker-compose 配置示例文件
+└── docker-compose.sample.yml         docker-compose 配置示例文件
+
 ```
 
 ## 1.1 php -m
@@ -85,6 +88,7 @@ zlib
     git clone https://github.com/xiaoshangmin/dnmp.git      # clone 项目
     cd dnmp                                                 # 进入项目目录
     cp .example.env .env                                    # 复制环境变量文件
+    cp  docker-compose.sample.yml  docker-compose.yml       # docker-compose配置文件
     docker-compose up                                       # 启动项目
     docker-compose up -d                                    # 守护进程模式运行
     国内下载替换docker源
@@ -102,10 +106,8 @@ zlib
 
 ### 2.2 phpfpm容器
     docker exec -it php sh #进入容器
-    # 修改composer 源
-    composer config -g secure-http false 
-    composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ 
-    cd /var/www/html  #网站目录
+    在容器访问nginx 需要在hosts里面添加 nginx容器的IP:你的域名，或者在docker-copmose.yml里面用extra_hosts配置
+
 
 ## 2.3 rabbitmq
     在浏览器中访问：`http://localhost:15672`，帐号密码：admin:admin
