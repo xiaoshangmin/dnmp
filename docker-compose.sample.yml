@@ -25,9 +25,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
-      - ./nginx/conf.d/:/etc/nginx/conf.d/:rw
-      - ./nginx/cert:/etc/nginx/cert:ro
+      - ${OPENRESTY_CONF_DIR}/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
+      - ${OPENRESTY_CONF_DIR}/conf.d/:/etc/nginx/conf.d/:rw
+      - ${OPENRESTY_CONF_DIR}/cert:/etc/nginx/cert:ro
       - ${LOG_DIR}/nginx:/var/log/nginx:rw
       - ./www:/var/www/html:rw
     environment:
@@ -58,7 +58,7 @@ services:
       - "6379:6379"
     volumes:
       - ${DATA_DIR}/redis:/data:rw
-      - ./redis/redis.conf:/etc/redis.conf:ro
+      - ${REDIS_CONF_DIR}/redis.conf:/etc/redis.conf:ro
     environment:
       TZ: "${TIMEZONE}"
     networks: 

@@ -22,6 +22,12 @@ docker-php-ext-enable yac
 pecl install grpc
 docker-php-ext-enable grpc
 
+extName="protobuf"
+mkdir ${extName}
+tar -xf protobuf-3.15.6.tgz -C ${extName} --strip-components=1
+(cd ${extName} && phpize && ./configure && make -j$(nproc) && make install)
+docker-php-ext-enable ${extName}
+
 extName="redis"
 mkdir ${extName}
 tar -xf redis-5.3.2.tgz -C ${extName} --strip-components=1

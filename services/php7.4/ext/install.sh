@@ -17,8 +17,7 @@ docker-php-ext-install -j$(nproc) bcmath
 docker-php-ext-install -j$(nproc) opcache
 docker-php-ext-install -j$(nproc) zip
  
-# pecl install protobuf
-# docker-php-ext-enable protobuf
+ 
 pecl install yac
 docker-php-ext-enable yac
 pecl install grpc
