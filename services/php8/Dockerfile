@@ -1,4 +1,4 @@
-FROM php:8.0.3-fpm-alpine
+FROM php:8.0.13-fpm-alpine
 
 ARG TIMEZONE=Asia/Shanghai
 
