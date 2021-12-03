@@ -19,9 +19,7 @@ docker-php-ext-install -j$(nproc) opcache
 docker-php-ext-install -j$(nproc) zip
  
 pecl install yac-2.0.2
-docker-php-ext-enable yac
-pecl install grpc
-docker-php-ext-enable grpc
+docker-php-ext-enable yac 
 pecl install xdebug
 docker-php-ext-enable xdebug
 pecl install protobuf
