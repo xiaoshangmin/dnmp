@@ -25,28 +25,24 @@ docker-php-ext-enable yac
 pecl install protobuf
 docker-php-ext-enable protobuf
 
-extName="redis"
-mkdir ${extName}
-tar -xf redis-5.2.0.tgz -C ${extName} --strip-components=1
-(cd ${extName} && phpize && ./configure && make -j$(nproc) && make install)
-docker-php-ext-enable ${extName}
 
-extName="xbebug"
-mkdir ${extName}
-tar -xf xbebug-3.1.2.tgz -C ${extName} --strip-components=1
-(cd ${extName} && phpize && ./configure && make -j$(nproc) && make install)
-docker-php-ext-enable ${extName}
 
-extName="swoole"
-mkdir ${extName}
-tar -xf swoole-4.5.9.tgz -C ${extName} --strip-components=1
-(cd ${extName} && phpize && ./configure && make -j$(nproc) && make install)
-docker-php-ext-enable ${extName}
+installExtensionFromTgz()
+{
+    tgzName=$1
+    extensionName="${tgzName%%-*}"
 
-extName="mongodb"
-mkdir ${extName}
-tar -xf mongodb-1.9.0.tgz -C ${extName} --strip-components=1
-(cd ${extName} && phpize && ./configure && make -j$(nproc) && make install)
-docker-php-ext-enable ${extName}
+    mkdir ${extensionName}
+    tar -xf ${tgzName}.tgz -C ${extensionName} --strip-components=1
+    ( cd ${extensionName} && phpize && ./configure && make -j$(nproc) && make install )
+
+    docker-php-ext-enable ${extensionName} $2
+}
+
+installExtensionFromTgz redis-5.2.0
+installExtensionFromTgz xdebug-3.1.2
+installExtensionFromTgz swoole-4.5.9
+installExtensionFromTgz mongodb-1.9.0
+
 
 apk del .build-deps 

@@ -18,6 +18,7 @@ docker-php-ext-install -j$(nproc) bcmath
 docker-php-ext-install -j$(nproc) opcache
 docker-php-ext-install -j$(nproc) zip
  
+
 pecl install yac-2.0.2
 docker-php-ext-enable yac 
 pecl install xdebug
