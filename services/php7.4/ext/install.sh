@@ -41,7 +41,6 @@ installExtensionFromTgz()
 
 installExtensionFromTgz redis-5.2.0
 installExtensionFromTgz xdebug-3.1.2
-installExtensionFromTgz swoole-4.5.9
 installExtensionFromTgz mongodb-1.9.0
 
 

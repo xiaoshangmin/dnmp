@@ -19,6 +19,8 @@ docker-php-ext-install -j$(nproc) opcache
 docker-php-ext-install -j$(nproc) zip
  
 
+pecl install swoole
+docker-php-ext-enable swoole
 pecl install yac-2.0.2
 docker-php-ext-enable yac 
 pecl install xdebug
@@ -27,8 +29,6 @@ pecl install protobuf
 docker-php-ext-enable protobuf
 pecl install redis
 docker-php-ext-enable redis
-pecl install swoole
-docker-php-ext-enable swoole
 pecl install mongodb
 docker-php-ext-enable mongodb
  

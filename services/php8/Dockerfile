@@ -15,12 +15,10 @@ RUN chmod +x install.sh \
 
 RUN apk --no-cache add tzdata \
     && cp "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime \
-    && echo "$TIMEZONE" > /etc/timezone \
-    && apk del tzdata
+    && echo "$TIMEZONE" > /etc/timezone
 
 RUN curl -o /usr/bin/composer https://mirrors.aliyun.com/composer/composer.phar \
     && chmod +x /usr/bin/composer \
-    && composer config -g secure-http false \
     && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ 
     
 ENV COMPOSER_HOME=/tmp/composer
