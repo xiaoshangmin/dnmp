@@ -13,7 +13,7 @@ docker-php-ext-install -j$(nproc) mysqli
 docker-php-ext-install -j$(nproc) exif
 docker-php-ext-install -j$(nproc) sockets
 docker-php-ext-install -j$(nproc) gettext
-#docker-php-ext-install -j$(nproc) intl
+docker-php-ext-install -j$(nproc) intl
 docker-php-ext-install -j$(nproc) soap
 docker-php-ext-install -j$(nproc) bcmath
 docker-php-ext-install -j$(nproc) opcache
