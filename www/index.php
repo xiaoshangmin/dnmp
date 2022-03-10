@@ -17,7 +17,7 @@
 // $count = $redis->get($uid);
 // echo "第{$count}次请求";
 // sleep(10);
-phpinfo();
+phpinfo(); 
 
 //链接数据库
 // try{

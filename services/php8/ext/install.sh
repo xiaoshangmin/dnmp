@@ -22,9 +22,7 @@ docker-php-ext-install -j$(nproc) zip
 pecl install swoole
 docker-php-ext-enable swoole
 pecl install yac-2.0.2
-docker-php-ext-enable yac 
-pecl install xdebug
-docker-php-ext-enable xdebug
+docker-php-ext-enable yac
 pecl install protobuf
 docker-php-ext-enable protobuf
 pecl install redis
@@ -33,4 +31,4 @@ pecl install mongodb
 docker-php-ext-enable mongodb
  
 
-apk del .build-deps 
+apk del .build-deps && docker-php-source delete

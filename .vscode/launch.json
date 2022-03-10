@@ -7,8 +7,13 @@
         {
             "name": "Listen for Xdebug",
             "type": "php",
-            "request": "launch",
-            "port": 9003
+            "request": "launch",  
+            "log": true,
+            "stopOnEntry": true,
+            "port": 9003, 
+            "pathMappings": {
+                "/var/www/bwsaas":"D:\\dnmp\\www\\bwsaas"
+            }
         },
         {
             "name": "Launch currently open script",
@@ -16,7 +21,7 @@
             "request": "launch",
             "program": "${file}",
             "cwd": "${fileDirname}",
-            "port": 0,
+            "port": 9003,
             "runtimeArgs": [
                 "-dxdebug.start_with_request=yes"
             ],
