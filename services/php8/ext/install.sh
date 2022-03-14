@@ -19,7 +19,7 @@ docker-php-ext-install -j$(nproc) opcache
 docker-php-ext-install -j$(nproc) zip
  
 
-pecl install swoole
+pecl install -D 'enable-sockets="no" enable-openssl="yes" enable-http2="yes" enable-mysqlnd="yes" enable-swoole-json="no" enable-swoole-curl="yes" enable-cares="yes"' swoole
 docker-php-ext-enable swoole
 pecl install yac-2.0.2
 docker-php-ext-enable yac

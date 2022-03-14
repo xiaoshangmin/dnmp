@@ -24,6 +24,8 @@ pecl install yac-2.0.2
 docker-php-ext-enable yac  
 pecl install protobuf
 docker-php-ext-enable protobuf
+pecl install -D 'enable-sockets="no" enable-openssl="yes" enable-http2="yes" enable-mysqlnd="yes" enable-swoole-json="no" enable-swoole-curl="yes" enable-cares="yes"' swoole
+docker-php-ext-enable swoole
 
 
 
@@ -39,9 +41,8 @@ installExtensionFromTgz()
     docker-php-ext-enable ${extensionName} $2
 }
 
+
 installExtensionFromTgz redis-5.2.0
 installExtensionFromTgz mongodb-1.9.0
-installExtensionFromTgz swoole-4.5.9
-
 
 apk del .build-deps && docker-php-source delete
