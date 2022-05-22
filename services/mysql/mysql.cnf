@@ -34,6 +34,7 @@
 default-storage-engine  = InnoDB
 default-authentication-plugin   = mysql_native_password
 character-set-server    = utf8mb4
+sql_mode = ''
 
 slow_query_log          = 0
 long_query_time         = 2
