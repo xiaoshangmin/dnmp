@@ -4,6 +4,7 @@ services:
     image: ${PHP_VERSION}
     container_name: php
     restart: always
+    tty: true
     ports:
       - "9000:9000"
       - "9501:9501"
