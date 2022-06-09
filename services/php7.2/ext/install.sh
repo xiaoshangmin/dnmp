@@ -1,7 +1,7 @@
 #!/bin/sh
 apk --update add --no-cache --virtual .build-deps autoconf g++ libtool make curl-dev gettext-dev linux-headers
 
-apk --no-cache add git gettext-dev libzip-dev icu-dev freetype freetype-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libwebp-dev libxml2-dev
+apk --no-cache add git file-dev imagemagick-dev gettext-dev libzip-dev icu-dev freetype freetype-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libwebp-dev libxml2-dev
 
 docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp
 docker-php-ext-install -j$(nproc) gd
@@ -19,13 +19,13 @@ docker-php-ext-install -j$(nproc) bcmath
 docker-php-ext-install -j$(nproc) opcache
 docker-php-ext-install -j$(nproc) zip
  
- 
-pecl install yac-2.0.2
-docker-php-ext-enable yac  
+  
 pecl install protobuf
 docker-php-ext-enable protobuf
 pecl install -D 'enable-sockets="no" enable-openssl="yes" enable-http2="yes" enable-mysqlnd="yes" enable-swoole-json="no" enable-swoole-curl="yes" enable-cares="yes"' swoole
 docker-php-ext-enable swoole
+pecl install imagick
+docker-php-ext-enable imagick
 
 
 
