@@ -1,7 +1,7 @@
 #!/bin/sh
-apk --update add --no-cache --virtual .build-deps autoconf g++ libtool make curl-dev gettext-dev linux-headers
+apk --update add --no-cache --virtual .build-deps autoconf g++ libtool make curl-dev linux-headers
 
-apk --no-cache add git file-dev imagemagick-dev gettext-dev libzip-dev icu-dev freetype freetype-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libwebp-dev libxml2-dev
+apk --no-cache add git file-dev imagemagick-dev imagemagick gettext-dev libzip-dev icu-dev freetype freetype-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libwebp-dev libxml2-dev
 
 docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp
 docker-php-ext-install -j$(nproc) gd
