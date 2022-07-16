@@ -4,10 +4,10 @@ services:
     image: ${PHP_VERSION}
     container_name: php
     restart: always
-    tty: true
     ports:
       - "9000:9000"
       - "9501:9501"
+      - "9503:9503"
     volumes:
       - ${PHP_CONF_DIR}/php.ini:/usr/local/etc/php/php.ini:ro
       - ${PHP_CONF_DIR}/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:ro
@@ -16,8 +16,9 @@ services:
       - ./www:/var/www/html:rw
     environment:
       TZ: "${TIMEZONE}"
-    networks: 
-      - "default"
+    tty: true
+    networks:
+      - elk
   openresty:
     image: ${OPENRESTY_VERSION}
     container_name: openresty
@@ -33,8 +34,8 @@ services:
       - ./www:/var/www/html:rw
     environment:
       TZ: "${TIMEZONE}"
-    networks: 
-      - "default"
+    networks:
+      - elk
   mysql:
     image: ${MYSQL_VERSION}
     container_name: mysql
@@ -49,8 +50,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       TZ: "${TIMEZONE}"
-    networks: 
-      - "default"
+    networks:
+      - elk
   redis:
     image: ${REDIS_VERSION}
     container_name: redis
@@ -62,8 +63,8 @@ services:
       - ${REDIS_CONF_DIR}/redis.conf:/etc/redis.conf:ro
     environment:
       TZ: "${TIMEZONE}"
-    networks: 
-      - "default"
+    networks:
+      - elk
   # rabbitmq:
   #   image: xiaoshangmin/rabbitmq
   #   container_name: rabbitmq
@@ -80,22 +81,23 @@ services:
   #     - RABBITMQ_DEFAULT_PASS=admin
   #   networks: 
   #     - "default"
-  # elasticsearch:
-  #   image: elasticsearch:7.9.3
-  #   container_name: elasticsearch
-  #   hostname: elasticsearch
-  #   volumes: 
-  #     - ./data/esdata:/usr/share/elasticsearch/data:rw
-  #     - ./elk/es/plugins:/usr/share/elasticsearch/plugins:rw
-  #     - ./elk/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-  #   environment:
-  #     - discovery.type=single-node
-  #     - bootstrap.memory_lock=true
-  #     - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-  #   ports:
-  #     - 9200:9200
-  #   networks:
-  #     - "default"
+  elasticsearch:
+    image: elasticsearch:7.9.3
+    container_name: elasticsearch
+    hostname: elasticsearch
+    volumes:
+      #多个容器之间共享数据卷，须在顶级的 volumes 节点中定义这个数据卷elasticsearch
+      - elasticsearch:/usr/share/elasticsearch/data:z
+      - ./data/esdata:/usr/share/elasticsearch/data:z
+      - ./elk/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: -Xms1g -Xmx1g
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - elk
   # filebeat:
   #   image: elastic/filebeat:7.9.3
   #   container_name: filebeat
@@ -107,36 +109,41 @@ services:
   #     - "default"
   #   depends_on:
   #     - "logstash"
-  # logstash:
-  #   image: logstash:7.9.3
-  #   container_name: logstash
-  #   hostname: logstash
-  #   volumes:
-  #     - ./elk/logstash/pipeline:/usr/share/logstash/pipeline:ro
-  #     - ./elk/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-  #   environment:
-  #     LS_JAVA_OPTS: -Xmx1g -Xms1g
-  #   ports:
-  #     - "5044:5044"
-  #     - "5000:5000/tcp"
-  #     - "5000:5000/udp"
-  #     - "9600:9600"
-  #   networks:
-  #     - "default"
-  # kibana:
-  #   image: kibana:7.9.3
-  #   container_name: kibana
-  #   hostname: kibana
-  #   volumes:
-  #     - ./elk/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
-  #   ports:
-  #     - "5601:5601"
-  #   environment: 
-  #     I18N_LOCALE: "zh-CN" 
-  #     elasticsearch.hosts: http://elasticsearch:9200
-  #   depends_on:
-  #     - elasticsearch
-  #   networks: 
-  #     - "default"
+  logstash:
+    image: logstash:7.9.3
+    container_name: logstash
+    hostname: logstash
+    volumes:
+      - ./elk/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+      - ./elk/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+    environment:
+      LS_JAVA_OPTS: -Xmx1g -Xms1g
+    ports:
+      - "5044:5044"
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "9600:9600"
+    networks:
+      - "default"
+    depends_on:
+      - elasticsearch
+  kibana:
+    image: kibana:7.9.3
+    container_name: kibana
+    hostname: kibana
+    volumes:
+      - ./elk/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+    ports:
+      - "5601:5601"
+    environment:
+      I18N_LOCALE: "zh-CN"
+      elasticsearch.hosts: http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    networks:
+      - elk
+volumes:
+  elasticsearch:
 networks:
-  default:
+  elk:
+    driver: bridge
