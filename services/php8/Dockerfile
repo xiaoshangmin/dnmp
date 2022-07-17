@@ -22,7 +22,7 @@ RUN apk add gnu-libiconv=1.16-r0 libstdc++ --no-cache --repository http://mirror
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 #apk add libreoffice
-RUN apk add fontconfig mkfontscale wqy-zenhei --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing --allow-untrusted
+RUN apk add fontconfig mkfontscale wqy-zenhei --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing --allow-untrusted
 
 RUN curl -o /usr/bin/composer https://mirrors.aliyun.com/composer/composer.phar \
     && chmod +x /usr/bin/composer \

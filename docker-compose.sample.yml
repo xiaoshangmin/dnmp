@@ -92,7 +92,7 @@ services:
       - ./elk/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
     environment:
       discovery.type: single-node
-      ES_JAVA_OPTS: -Xms1g -Xmx1g
+      ES_JAVA_OPTS: -Xmx512m -Xms512m
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -116,15 +116,16 @@ services:
     volumes:
       - ./elk/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
       - ./elk/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+      - ${LOG_DIR}/nginx:/var/log/nginx:rw
     environment:
-      LS_JAVA_OPTS: -Xmx1g -Xms1g
+      LS_JAVA_OPTS: -Xmx512m -Xms512m
     ports:
       - "5044:5044"
       - "5000:5000/tcp"
       - "5000:5000/udp"
       - "9600:9600"
     networks:
-      - "default"
+      - elk
     depends_on:
       - elasticsearch
   kibana:
