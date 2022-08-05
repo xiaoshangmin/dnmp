@@ -93,7 +93,11 @@ zlib
     docker-compose up -d                                    # 守护进程模式运行
     国内下载替换docker源
     {
-        "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+        "registry-mirrors": [
+                "https://ustc-edu-cn.mirror.aliyuncs.com/",
+                "https://hub-mirror.c.163.com",
+                "https://mirror.baidubce.com"
+        ]
     }
 ```
     在浏览器中访问：`http://localhost`，PHP代码在文件`./www/index.php`。  

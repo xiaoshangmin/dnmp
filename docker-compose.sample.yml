@@ -85,6 +85,7 @@ services:
     image: elasticsearch:7.9.3
     container_name: elasticsearch
     hostname: elasticsearch
+    restart: always
     volumes:
       #多个容器之间共享数据卷，须在顶级的 volumes 节点中定义这个数据卷elasticsearch
       - elasticsearch:/usr/share/elasticsearch/data:z
@@ -113,6 +114,7 @@ services:
     image: logstash:7.9.3
     container_name: logstash
     hostname: logstash
+    restart: always
     volumes:
       - ./elk/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
       - ./elk/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
@@ -132,6 +134,7 @@ services:
     image: kibana:7.9.3
     container_name: kibana
     hostname: kibana
+    restart: always
     volumes:
       - ./elk/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
     ports:
