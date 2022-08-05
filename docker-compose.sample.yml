@@ -82,7 +82,7 @@ services:
   #   networks: 
   #     - "default"
   elasticsearch:
-    image: elasticsearch:8.3.3
+    image: elasticsearch:7.17.5
     container_name: elasticsearch
     hostname: elasticsearch
     restart: always
@@ -100,7 +100,7 @@ services:
     networks:
       - elk
   # filebeat:
-  #   image: elastic/filebeat:8.3.3
+  #   image: elastic/filebeat:7.17.5
   #   container_name: filebeat
   #   user: root
   #   volumes:
@@ -111,7 +111,7 @@ services:
   #   depends_on:
   #     - "logstash"
   logstash:
-    image: logstash:8.3.3
+    image: logstash:7.17.5
     container_name: logstash
     hostname: logstash
     restart: always
@@ -131,7 +131,7 @@ services:
     depends_on:
       - elasticsearch
   kibana:
-    image: kibana:8.3.3
+    image: kibana:7.17.5
     container_name: kibana
     hostname: kibana
     restart: always
