@@ -82,7 +82,7 @@ services:
   #   networks: 
   #     - "default"
   elasticsearch:
-    image: elasticsearch:7.17.5
+    image: ${ES_VERSION}
     container_name: elasticsearch
     hostname: elasticsearch
     restart: always
@@ -111,7 +111,7 @@ services:
   #   depends_on:
   #     - "logstash"
   logstash:
-    image: logstash:7.17.5
+    image: ${LOGSTASH_VERSION}
     container_name: logstash
     hostname: logstash
     restart: always
@@ -131,7 +131,7 @@ services:
     depends_on:
       - elasticsearch
   kibana:
-    image: kibana:7.17.5
+    image: ${KIBANA_VERSION}
     container_name: kibana
     hostname: kibana
     restart: always
