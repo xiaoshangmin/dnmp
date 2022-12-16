@@ -65,6 +65,20 @@ services:
       TZ: "${TIMEZONE}"
     networks:
       - elk
+  nacos:
+    image: ${NACOS_VERSION}
+    container_name: nacos
+    restart: on-failure
+    ports:
+      - "8849:8849"
+    volumes:
+      - ${LOG_DIR}/nacos/:/home/nacos/logs
+      - ${NACOS_CONF_DIR}/conf/application.properties:/home/nacos/conf/application.properties
+    depends_on:
+      - "mysql"
+    tty: true
+    networks:
+      - elk
   # rabbitmq:
   #   image: xiaoshangmin/rabbitmq
   #   container_name: rabbitmq

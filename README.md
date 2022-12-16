@@ -20,9 +20,11 @@ ELK + FILEBEAT
 │   ├── nginx                   nginx 日志
 │   └── php                     php 日志
 │   └── rabbitmq                rabbitmq 日志
+│   └── nacos                   nacos 日志
 ├── services
 │   ├── mysql                   mysql8配置文件
 │   ├── mysql5                  mysql5配置文件
+│   ├── nacos                   nacos配置文件
 │   ├── nginx                   nginx配置文件
 │   ├── php7.2                  php7.2配置文件
 │   ├── php7.3                  php7.3配置文件
@@ -118,3 +120,6 @@ zlib
 
 ## 2.4 kibana
     在浏览器中访问：`http://localhost:5601`
+
+## 2.5 nacos
+    配置nacos持久化，修改conf/application.properties文件，增加支持mysql数据源配置
