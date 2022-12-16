@@ -71,6 +71,7 @@ services:
     restart: on-failure
     ports:
       - "8849:8849"
+      - "8848:8848"
     volumes:
       - ${LOG_DIR}/nacos/:/home/nacos/logs
       - ${NACOS_CONF_DIR}/conf/application.properties:/home/nacos/conf/application.properties
