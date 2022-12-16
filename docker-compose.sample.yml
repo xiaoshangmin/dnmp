@@ -95,24 +95,24 @@ services:
   #     - RABBITMQ_DEFAULT_PASS=admin
   #   networks: 
   #     - "default"
-  elasticsearch:
-    image: elasticsearch:7.17.5
-    container_name: elasticsearch
-    hostname: elasticsearch
-    restart: always
-    volumes:
-      #多个容器之间共享数据卷，须在顶级的 volumes 节点中定义这个数据卷elasticsearch
-      - elasticsearch:/usr/share/elasticsearch/data:z
-      - ./data/esdata:/usr/share/elasticsearch/data:z
-      - ./elk/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
-    environment:
-      discovery.type: single-node
-      ES_JAVA_OPTS: -Xmx512m -Xms512m
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    networks:
-      - elk
+  # elasticsearch:
+  #   image: elasticsearch:7.17.5
+  #   container_name: elasticsearch
+  #   hostname: elasticsearch
+  #   restart: always
+  #   volumes:
+  #     #多个容器之间共享数据卷，须在顶级的 volumes 节点中定义这个数据卷elasticsearch
+  #     - elasticsearch:/usr/share/elasticsearch/data:z
+  #     - ./data/esdata:/usr/share/elasticsearch/data:z
+  #     - ./elk/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
+  #   environment:
+  #     discovery.type: single-node
+  #     ES_JAVA_OPTS: -Xmx512m -Xms512m
+  #   ports:
+  #     - "9200:9200"
+  #     - "9300:9300"
+  #   networks:
+  #     - elk
   # filebeat:
   #   image: elastic/filebeat:7.17.5
   #   container_name: filebeat
@@ -124,44 +124,44 @@ services:
   #     - "default"
   #   depends_on:
   #     - "logstash"
-  logstash:
-    image: logstash:7.17.5
-    container_name: logstash
-    hostname: logstash
-    restart: always
-    volumes:
-      - ./elk/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
-      - ./elk/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
-      - ${LOG_DIR}/nginx:/var/log/nginx:rw
-    environment:
-      LS_JAVA_OPTS: -Xmx512m -Xms512m
-    ports:
-      - "5044:5044"
-      - "5000:5000/tcp"
-      - "5000:5000/udp"
-      - "9600:9600"
-    networks:
-      - elk
-    depends_on:
-      - elasticsearch
-  kibana:
-    image: kibana:7.17.5
-    container_name: kibana
-    hostname: kibana
-    restart: always
-    volumes:
-      - ./elk/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
-    ports:
-      - "5601:5601"
-    environment:
-      I18N_LOCALE: "zh-CN"
-      elasticsearch.hosts: http://elasticsearch:9200
-    depends_on:
-      - elasticsearch
-    networks:
-      - elk
-volumes:
-  elasticsearch:
+#   logstash:
+#     image: logstash:7.17.5
+#     container_name: logstash
+#     hostname: logstash
+#     restart: always
+#     volumes:
+#       - ./elk/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+#       - ./elk/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+#       - ${LOG_DIR}/nginx:/var/log/nginx:rw
+#     environment:
+#       LS_JAVA_OPTS: -Xmx512m -Xms512m
+#     ports:
+#       - "5044:5044"
+#       - "5000:5000/tcp"
+#       - "5000:5000/udp"
+#       - "9600:9600"
+#     networks:
+#       - elk
+#     depends_on:
+#       - elasticsearch
+#   kibana:
+#     image: kibana:7.17.5
+#     container_name: kibana
+#     hostname: kibana
+#     restart: always
+#     volumes:
+#       - ./elk/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+#     ports:
+#       - "5601:5601"
+#     environment:
+#       I18N_LOCALE: "zh-CN"
+#       elasticsearch.hosts: http://elasticsearch:9200
+#     depends_on:
+#       - elasticsearch
+#     networks:
+#       - elk
+# volumes:
+#   elasticsearch:
 networks:
   elk:
     driver: bridge
