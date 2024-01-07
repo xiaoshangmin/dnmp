@@ -1,0 +1,105 @@
+## 开始执行... 2023-02-27 22:28:32
+
+开始更新仓库：/ql/repo/RayWangQvQ_BiliBiliToolPro
+
+Fetching origin
+HEAD is now at e832337 update
+Updating e832337..c5837ab
+Fast-forward
+ CHANGELOG.md                                       |   9 +-
+ Ray.BiliBiliTool.sln                               |  14 +
+ common.props                                       |   2 +-
+ docker/scripts/entry.sh                            |   2 +-
+ qinglong/DefaultTasks/bili_task_base.sh            |  10 +-
+ qinglong/DefaultTasks/bili_task_daily.sh           |   2 +-
+ qinglong/DefaultTasks/bili_task_liveFansMedal.sh   |   2 +-
+ qinglong/DefaultTasks/bili_task_liveLottery.sh     |   2 +-
+ qinglong/DefaultTasks/bili_task_login.sh           |   2 +-
+ qinglong/DefaultTasks/bili_task_test.sh            |   2 +-
+ qinglong/DefaultTasks/bili_task_tryFix.sh          |   7 +-
+ qinglong/DefaultTasks/bili_task_unfollowBatched.sh |   2 +-
+ qinglong/DefaultTasks/bili_task_vipBigPoint.sh     |   2 +-
+ qinglong/DefaultTasks/dev/bili_dev_task_base.sh    |  10 +-
+ qinglong/DefaultTasks/dev/bili_dev_task_tryFix.sh  |   7 +-
+ .../Attributes/LogFilterAttribute.cs               |   2 +
+ .../BiliBiliAgent/Dtos/AddCoinRequest.cs           |   8 +
+ .../BiliBiliAgent/Dtos/Live/MedalWallDto.cs        |   4 +-
+ .../Dtos/Passport/GetSsoListResponse.cs            |   9 +
+ .../BiliBiliAgent/Interfaces/IHomeApi.cs           |  18 +
+ .../BiliBiliAgent/Interfaces/IPassportApi.cs       |   3 +
+ .../BiliBiliAgent/Interfaces/IUserInfoApi.cs       |   3 +-
+ .../BiliBiliAgent/Interfaces/IVideoApi.cs          |   6 +-
+ src/Ray.BiliBiliTool.Agent/BiliCookie.cs           |  56 +--
+ .../Extensions/ServiceCollectionExtension.cs       |   7 +-
+ .../IAppService.cs                                 |   7 +-
+ src/Ray.BiliBiliTool.Application/AppService.cs     |  12 +-
+ .../Attributes/TaskInterceptorAttribute.cs         |  21 +-
+ .../DailyTaskAppService.cs                         | 141 ++++---
+ src/Ray.BiliBiliTool.Application/FodyWeavers.xml   |   4 +-
+ src/Ray.BiliBiliTool.Application/FodyWeavers.xsd   |   2 +-
+ .../LiveFansMedalAppService.cs                     |  35 +-
+ .../LiveLotteryTaskAppService.cs                   |  38 +-
+ .../LoginTaskAppService.cs                         | 381 ++-----------------
+ .../Ray.BiliBiliTool.Application.csproj            |   2 +-
+ src/Ray.BiliBiliTool.Application/TestAppService.cs |   8 +-
+ .../UnfollowBatchedTaskAppService.cs               |  24 +-
+ .../VipBigPointAppService.cs                       |  97 ++---
+ .../BiliBiliToolHostedService.cs                   |  36 +-
+ src/Ray.BiliBiliTool.Console/Program.cs            |  21 +-
+ .../Properties/launchSettings.json                 |   2 +-
+ .../AccountDomainService.cs                        |  37 +-
+ .../ChargeDomainService.cs                         |  14 +-
+ .../CoinDomainService.cs                           |  15 +-
+ .../DonateCoinDomainService.cs                     | 113 +++---
+ .../Interfaces/IAccountDomainService.cs            |  10 +-
+ .../Interfaces/IChargeDomainService.cs             |   8 +-
+ .../Interfaces/ICoinDomainService.cs               |   8 +-
+ .../Interfaces/IDomainService.cs                   |   6 +-
+ .../Interfaces/IDonateCoinDomainService.cs         |  12 +-
+ .../Interfaces/ILiveDomainService.cs               |  20 +-
+ .../Interfaces/ILoginDomainService.cs              |  38 ++
+ .../Interfaces/IMangaDomainService.cs              |  10 +-
+ .../Interfaces/IVideoDomainService.cs              |  18 +-
+ .../Interfaces/IVipPrivilegeDomainService.cs       |   6 +-
+ .../LiveDomainService.cs                           | 189 +++++-----
+ .../LoginDomainService.cs                          | 407 +++++++++++++++++++++
+ .../MangaDomainService.cs                          |  17 +-
+ .../Ray.BiliBiliTool.DomainService.csproj          |   2 +
+ .../VideoDomainService.cs                          |  67 ++--
+ .../VipPrivilegeDomainService.cs                   |  14 +-
+ .../Cookie/CookieInfo.cs                           | 110 ++++--
+ .../Cookie/CookieStrFactory.cs                     | 100 ++++-
+ .../Enums/{PlateformType.cs => PlatformType.cs}    |   2 +-
+ .../Helpers/IpHelper.cs                            |   2 +-
+ .../Helpers/RegexHelper.cs                         |  66 ++++
+ test/AppServiceTest/AppServiceTest.csproj          |  28 ++
+ test/AppServiceTest/DailyTask/DonateCoinsTest.cs   |  24 ++
+ test/AppServiceTest/Usings.cs                      |   2 +
+ test/BiliAgentTest/HomeApiTest.cs                  |  35 ++
+ test/BiliAgentTest/LiveApiTest.cs                  |   1 +
+ test/BiliAgentTest/LiveTraceApiTest.cs             |   1 +
+ test/BiliAgentTest/VideoApiTest.cs                 |   1 +
+ test/ConfigTest/TestEnum.cs                        |   2 +-
+ test/ConfigTest/UnitTest1.cs                       |  10 +
+ test/DomainServiceTest/DomainServiceTest.csproj    |  28 ++
+ .../DonateCoinDomainServiceTest.cs                 |  21 ++
+ test/DomainServiceTest/Usings.cs                   |   5 +
+ 78 files changed, 1483 insertions(+), 988 deletions(-)
+ create mode 100644 src/Ray.BiliBiliTool.Agent/BiliBiliAgent/Dtos/Passport/GetSsoListResponse.cs
+ create mode 100644 src/Ray.BiliBiliTool.Agent/BiliBiliAgent/Interfaces/IHomeApi.cs
+ create mode 100644 src/Ray.BiliBiliTool.DomainService/Interfaces/ILoginDomainService.cs
+ create mode 100644 src/Ray.BiliBiliTool.DomainService/LoginDomainService.cs
+ rename src/Ray.BiliBiliTool.Infrastructure/Enums/{PlateformType.cs => PlatformType.cs} (89%)
+ create mode 100644 src/Ray.BiliBiliTool.Infrastructure/Helpers/RegexHelper.cs
+ create mode 100644 test/AppServiceTest/AppServiceTest.csproj
+ create mode 100644 test/AppServiceTest/DailyTask/DonateCoinsTest.cs
+ create mode 100644 test/AppServiceTest/Usings.cs
+ create mode 100644 test/BiliAgentTest/HomeApiTest.cs
+ create mode 100644 test/DomainServiceTest/DomainServiceTest.csproj
+ create mode 100644 test/DomainServiceTest/DonateCoinDomainServiceTest.cs
+ create mode 100644 test/DomainServiceTest/Usings.cs
+
+更新/ql/repo/RayWangQvQ_BiliBiliToolPro成功...
+
+
+## 执行结束... 2023-02-27 22:28:40  耗时 8 秒

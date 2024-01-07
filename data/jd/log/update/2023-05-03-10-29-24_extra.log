@@ -1,0 +1,47 @@
+## 开始执行... 2023-05-03 10:29:24
+
+--------------------------------------------------------------
+
+
+-------set up dot net env-------
+安装依赖...
+fetch https://mirrors.aliyun.com/alpine/v3.15/main/x86_64/APKINDEX.tar.gz
+fetch https://mirrors.aliyun.com/alpine/v3.15/community/x86_64/APKINDEX.tar.gz
+OK: 360 MiB in 112 packages
+install by binaries...
+添加PATH
+.NET SDK:
+ Version:   6.0.405
+ Commit:    27ab36058b
+
+运行时环境:
+ OS Name:     alpine
+ OS Version:  3.15
+ OS Platform: Linux
+ RID:         alpine.3.15-x64
+ Base Path:   /root/.dotnet/sdk/6.0.405/
+
+global.json file:
+  Not found
+
+Host:
+  Version:      6.0.13
+  Architecture: x64
+  Commit:       1af80ba017
+
+.NET SDKs installed:
+  6.0.405 [/root/.dotnet/sdk]
+
+.NET runtimes installed:
+  Microsoft.AspNetCore.App 6.0.13 [/root/.dotnet/shared/Microsoft.AspNetCore.App]
+  Microsoft.NETCore.App 6.0.13 [/root/.dotnet/shared/Microsoft.NETCore.App]
+
+Download .NET:
+  https://aka.ms/dotnet-download
+
+Learn about .NET Runtimes and SDKs:
+  https://aka.ms/dotnet/runtimes-sdk-info
+
+-------set up dot net env finish-------
+
+## 执行结束... 2023-05-03 10:32:15  耗时 171 秒

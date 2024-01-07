@@ -1,0 +1,22 @@
+## 开始执行... 2023-03-21 17:54:00
+
+开始更新仓库：/ql/repo/6dylan6_jdpro
+
+Fetching origin
+HEAD is now at 15a1e8f 1
+Updating 15a1e8f..8e143ce
+Fast-forward
+ jd_try_2.0.js | 1350 ---------------------------------------------------------
+ 1 file changed, 1350 deletions(-)
+ delete mode 100644 jd_try_2.0.js
+
+更新/ql/repo/6dylan6_jdpro成功...
+
+检测到有失效的定时任务：
+
+6dylan6_jdpro/jd_try_2.0.js
+
+开始尝试自动删除失效的定时任务...
+
+
+## 执行结束... 2023-03-21 17:54:08  耗时 8 秒

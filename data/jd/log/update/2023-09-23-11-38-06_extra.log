@@ -1,0 +1,54 @@
+## 开始执行... 2023-09-23 11:38:06
+
+--------------------------------------------------------------
+
+
+-------set up dot net env-------
+安装依赖...
+fetch http://mirrors.tuna.tsinghua.edu.cn/alpine/v3.12/main/x86_64/APKINDEX.tar.gz
+fetch http://mirrors.tuna.tsinghua.edu.cn/alpine/v3.12/community/x86_64/APKINDEX.tar.gz
+(1/7) Installing icu-libs (67.1-r0)
+(2/7) Installing krb5-conf (1.0-r2)
+(3/7) Installing libcom_err (1.45.6-r0)
+(4/7) Installing keyutils-libs (1.6.1-r1)
+(5/7) Installing libverto (0.3.1-r1)
+(6/7) Installing krb5-libs (1.18.5-r0)
+(7/7) Installing libintl (0.20.2-r0)
+OK: 172 MiB in 93 packages
+install by binaries...
+添加PATH
+.NET SDK:
+ Version:   6.0.405
+ Commit:    27ab36058b
+
+运行时环境:
+ OS Name:     alpine
+ OS Version:  3.12
+ OS Platform: Linux
+ RID:         alpine.3.12-x64
+ Base Path:   /root/.dotnet/sdk/6.0.405/
+
+global.json file:
+  Not found
+
+Host:
+  Version:      6.0.13
+  Architecture: x64
+  Commit:       1af80ba017
+
+.NET SDKs installed:
+  6.0.405 [/root/.dotnet/sdk]
+
+.NET runtimes installed:
+  Microsoft.AspNetCore.App 6.0.13 [/root/.dotnet/shared/Microsoft.AspNetCore.App]
+  Microsoft.NETCore.App 6.0.13 [/root/.dotnet/shared/Microsoft.NETCore.App]
+
+Download .NET:
+  https://aka.ms/dotnet-download
+
+Learn about .NET Runtimes and SDKs:
+  https://aka.ms/dotnet/runtimes-sdk-info
+
+-------set up dot net env finish-------
+
+## 执行结束... 2023-09-23 11:40:20  耗时 134 秒

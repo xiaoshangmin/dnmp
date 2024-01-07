@@ -1,0 +1,22 @@
+## 开始执行... 2023-06-29 23:37:08
+
+开始更新仓库：/ql/repo/RayWangQvQ_BiliBiliToolPro
+
+Fetching origin
+HEAD is now at 643bfc1 update docker file
+Updating 643bfc1..9c8739f
+Fast-forward
+ CHANGELOG.md                                       |   3 +
+ common.props                                       |   2 +-
+ .../BiliBiliAgent/Dtos/GetSpaceInfoFullDto.cs      |  12 +
+ .../BiliBiliAgent/Interfaces/IUserInfoApi.cs       |   4 +-
+ .../LiveDomainService.cs                           |  34 +-
+ tencentScf/README.md                               | 455 +++++++++++----------
+ test/BiliAgentTest/LiveApiTest.cs                  |  23 +-
+ 7 files changed, 299 insertions(+), 234 deletions(-)
+ create mode 100644 src/Ray.BiliBiliTool.Agent/BiliBiliAgent/Dtos/GetSpaceInfoFullDto.cs
+
+更新/ql/repo/RayWangQvQ_BiliBiliToolPro失败，请检查网络...
+
+
+## 执行结束... 2023-06-29 23:43:25  耗时 377 秒

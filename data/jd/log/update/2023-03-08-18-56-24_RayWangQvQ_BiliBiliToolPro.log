@@ -1,0 +1,76 @@
+## 开始执行... 2023-03-08 18:56:24
+
+开始更新仓库：/ql/repo/RayWangQvQ_BiliBiliToolPro
+
+Fetching origin
+HEAD is now at c5837ab Merge branch 'release/1.0.0'
+Updating c5837ab..a7621b6
+Fast-forward
+ .github/workflows/codeql-analysis.yml              |   8 +-
+ .github/workflows/publish-release.yml              | 120 +++++-------------
+ CHANGELOG.md                                       |   9 ++
+ README.md                                          |   2 +-
+ common.props                                       |   2 +-
+ helm/README.md                                     |  62 +++++----
+ helm/bilibili-tool/Chart.yaml                      |   4 +-
+ helm/bilibili-tool/templates/configmap.yaml        |  83 ++++++++++++
+ helm/bilibili-tool/templates/deployment.yaml       |  34 ++++-
+ helm/bilibili-tool/values.yaml                     |  23 +++-
+ clean.cmd => scripts/clean.cmd                     |   2 +-
+ publish.bat => scripts/publish.bat                 |   4 +-
+ scripts/publish.sh                                 | 140 +++++++++++++++++++++
+ .../BiliBiliAgent/Dtos/ChargeResponse.cs           |   2 +-
+ .../BiliBiliAgent/Dtos/GetSpaceInfoResponse.cs     |   4 +-
+ .../Dtos/GetSpecialFollowingsRequest.cs            |   4 +-
+ .../BiliBiliAgent/Dtos/Live/AreaDto.cs             |   2 +-
+ .../BiliBiliAgent/Dtos/Live/CheckTianXuanDto.cs    |   6 +-
+ .../BiliBiliAgent/Dtos/Live/EnterRoomRequest.cs    |  10 +-
+ .../Dtos/Live/GetLiveRoomInfoResponse.cs           |   8 +-
+ .../BiliBiliAgent/Dtos/Live/HeartBeatRequest.cs    |   6 +-
+ .../BiliBiliAgent/Dtos/Live/JoinTianXuanRequest.cs |   4 +-
+ .../Dtos/Live/JoinTianXuanResponse.cs              |  10 +-
+ .../BiliBiliAgent/Dtos/Live/LikeLiveRoomRequest.cs |   4 +-
+ .../BiliBiliAgent/Dtos/Live/ListItemDto.cs         |  10 +-
+ .../Dtos/Live/SendLiveDanmukuRequest.cs            |   4 +-
+ .../BiliBiliAgent/Dtos/Live/WebHeartBeatRequest.cs |   2 +-
+ .../Dtos/Relation/CreateTagResponse.cs             |   2 +-
+ .../BiliBiliAgent/Dtos/Relation/TagDto.cs          |   2 +-
+ .../BiliBiliAgent/Interfaces/ILiveApi.cs           |   6 +-
+ .../Extensions/ServiceCollectionExtension.cs       |   2 +-
+ .../QingLong/IQingLongApi.cs                       |   2 +-
+ .../Ray.BiliBiliTool.Application.Contracts.csproj  |   4 +
+ .../TaskTypeFactory.cs                             |  24 +++-
+ src/Ray.BiliBiliTool.Config/Constants.cs           |  80 ++++++++++++
+ .../Extensions/ServiceCollectionExtension.cs       |   4 +-
+ .../BiliBiliToolHostedService.cs                   |  44 +++++--
+ src/Ray.BiliBiliTool.Console/Program.cs            |  36 ++++--
+ .../Ray.BiliBiliTool.Console.csproj                |  18 ---
+ src/Ray.BiliBiliTool.Console/appsettings.json      |   7 +-
+ .../commandLineMappings.json                       |  61 ---------
+ .../donateCoinCanContinueStatus.json               |  13 --
+ src/Ray.BiliBiliTool.Console/exp.json              |   8 --
+ .../AccountDomainService.cs                        |   2 +-
+ .../Dtos/FansMedalInfoDto.cs                       |   4 +-
+ .../Dtos/HeartBeatIterationInfoDto.cs              |   4 +-
+ .../LoginDomainService.cs                          |   3 +
+ .../Cookie/CookieStrFactory.cs                     |  12 +-
+ .../Extensions/ICollectionExtensions.cs            |  10 +-
+ .../TelegramApiClient.cs                           |   9 +-
+ .../TelegramBatchedSink.cs                         |   5 +-
+ .../TelegramLoggerConfigurationExtensions.cs       |   3 +-
+ test/ConfigTest/TestDonateCoinStatusConfig.cs      |   5 +-
+ test/ConfigTest/TestExpConfig.cs                   |   9 +-
+ test/LogTest/TestTelegram.cs                       |   4 +-
+ 55 files changed, 609 insertions(+), 343 deletions(-)
+ create mode 100644 helm/bilibili-tool/templates/configmap.yaml
+ rename clean.cmd => scripts/clean.cmd (97%)
+ rename publish.bat => scripts/publish.bat (96%)
+ create mode 100644 scripts/publish.sh
+ delete mode 100644 src/Ray.BiliBiliTool.Console/commandLineMappings.json
+ delete mode 100644 src/Ray.BiliBiliTool.Console/donateCoinCanContinueStatus.json
+ delete mode 100644 src/Ray.BiliBiliTool.Console/exp.json
+
+更新/ql/repo/RayWangQvQ_BiliBiliToolPro失败，请检查网络...
+
+
+## 执行结束... 2023-03-08 18:58:07  耗时 103 秒

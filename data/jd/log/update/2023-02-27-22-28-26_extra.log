@@ -1,0 +1,18 @@
+## 开始执行... 2023-02-27 22:28:26
+
+--------------------------------------------------------------
+
+
+-------set up dot net env-------
+安装依赖...
+fetch https://mirrors.aliyun.com/alpine/v3.15/main/x86_64/APKINDEX.tar.gz
+fetch https://mirrors.aliyun.com/alpine/v3.15/community/x86_64/APKINDEX.tar.gz
+(1/7) Installing icu-libs (69.1-r1)
+(2/7) Installing krb5-conf (1.0-r2)
+(3/7) Installing libcom_err (1.46.4-r0)
+(4/7) Installing keyutils-libs (1.6.3-r0)
+(5/7) Installing libverto (0.3.2-r0)
+(6/7) Installing krb5-libs (1.19.4-r0)
+(7/7) Installing libintl (0.21-r0)
+OK: 179 MiB in 99 packages
+install by binaries...

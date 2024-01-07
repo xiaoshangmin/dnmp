@@ -1,0 +1,25 @@
+## 开始执行... 2023-03-06 19:50:00
+
+开始更新仓库：/ql/repo/6dylan6_jdpro
+
+Fetching origin
+HEAD is now at 1777ad9 1
+Updating 1777ad9..0742295
+Fast-forward
+ jd_YSLD.js   | 32 --------------------------------
+ jd_teamAJ.js | 29 -----------------------------
+ 2 files changed, 61 deletions(-)
+ delete mode 100644 jd_YSLD.js
+ delete mode 100644 jd_teamAJ.js
+
+更新/ql/repo/6dylan6_jdpro成功...
+
+检测到有失效的定时任务：
+
+6dylan6_jdpro/jd_YSLD.js
+6dylan6_jdpro/jd_teamAJ.js
+
+开始尝试自动删除失效的定时任务...
+
+
+## 执行结束... 2023-03-06 19:50:10  耗时 10 秒

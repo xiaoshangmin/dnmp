@@ -1,0 +1,25 @@
+## 开始执行... 2023-03-12 21:50:00
+
+开始更新仓库：/ql/repo/6dylan6_jdpro
+
+Fetching origin
+HEAD is now at 29be4db 1
+Updating 29be4db..615a202
+Fast-forward
+ jd_opencard92.js |  74 ------
+ jx_sign.js       | 706 -------------------------------------------------------
+ 2 files changed, 780 deletions(-)
+ delete mode 100644 jd_opencard92.js
+ delete mode 100644 jx_sign.js
+
+更新/ql/repo/6dylan6_jdpro成功...
+
+检测到有失效的定时任务：
+
+6dylan6_jdpro/jd_opencard92.js
+6dylan6_jdpro/jx_sign.js
+
+开始尝试自动删除失效的定时任务...
+
+
+## 执行结束... 2023-03-12 21:50:11  耗时 11 秒
