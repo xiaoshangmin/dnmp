@@ -65,6 +65,20 @@ services:
       TZ: "${TIMEZONE}"
     networks:
       - elk
+  stirling-pdf:
+    image: frooodle/s-pdf:latest
+    ports:
+      - '8080:8080'
+    volumes:
+      - ${DATA_DIR}/s-pdf/trainingData:/usr/share/tessdata #Required for extra OCR languages
+      - ${DATA_DIR}/s-pdf/extraConfigs:/configs
+#      - /location/of/customFiles:/customFiles/
+#      - /location/of/logs:/logs/
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
+      - INSTALL_BOOK_AND_ADVANCED_HTML_OPS=false
+    networks:
+      - elk
   nacos:
     image: ${NACOS_VERSION}
     container_name: nacos
