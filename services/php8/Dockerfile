@@ -1,4 +1,4 @@
-FROM php:8.3.2-fpm-alpine
+FROM php:8.3.4-fpm-alpine
 
 ARG TIMEZONE=Asia/Shanghai
 
@@ -18,7 +18,7 @@ RUN apk --no-cache add tzdata \
     && echo "$TIMEZONE" > /etc/timezone
 
 # Fix: https://github.com/docker-library/php/issues/240
-RUN apk add gnu-libiconv=1.17-r2 libstdc++ --no-cache --repository http://mirrors.ustc.edu.cn/alpine/edge/community/ --allow-untrusted
+RUN apk add gnu-libiconv libstdc++ --no-cache --repository http://mirrors.ustc.edu.cn/alpine/edge/community/ --allow-untrusted
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 #apk add libreoffice
