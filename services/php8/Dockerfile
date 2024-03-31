@@ -7,10 +7,7 @@ LABEL maintainer="shangminxiao@gmail.com"
 RUN sed -i "s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g" /etc/apk/repositories
 
 RUN apk --update add --no-cache --virtual .build-deps git autoconf m4 g++ libtool make curl-dev linux-headers build-base && \
-    apk --no-cache add python3 python3-dev py3-pip file-dev freetype freetype-dev gettext-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libwebp-dev icu-dev libxml2-dev libzip-dev && \
-    docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
-    docker-php-ext-install -j$(nproc) gd && \
-    apk del freetype-dev libpng-dev libjpeg-turbo-dev
+    apk --no-cache add python3 python3-dev py3-pip file-dev imagemagick-dev imagemagick freetype freetype-dev gettext-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libwebp-dev icu-dev libxml2-dev libzip-dev
 
 
 COPY ./ext /tmp/ext
@@ -30,7 +27,7 @@ RUN git clone https://github.com/swoole/phpy.git /tmp/phpy && \
     docker-php-ext-enable phpy && \
     rm -rf /tmp/phpy
 
-RUN apk del .build-deps && docker-php-source delete
+RUN apk del .build-deps freetype-dev libpng-dev libjpeg-turbo-dev && docker-php-source delete
 
 RUN apk --no-cache add tzdata \
     && cp "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime \
