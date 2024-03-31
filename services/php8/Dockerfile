@@ -2,9 +2,16 @@ FROM php:8.3.4-fpm-alpine
 
 ARG TIMEZONE=Asia/Shanghai
 
-LABEL  maintainer="shangminxiao@gmail.com"
+LABEL maintainer="shangminxiao@gmail.com"
 
 RUN sed -i "s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g" /etc/apk/repositories
+
+RUN apk --update add --no-cache --virtual .build-deps git autoconf m4 g++ libtool make curl-dev linux-headers build-base && \
+    apk --no-cache add python3 python3-dev py3-pip file-dev freetype freetype-dev gettext-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libwebp-dev icu-dev libxml2-dev libzip-dev && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
+    docker-php-ext-install -j$(nproc) gd && \
+    apk del freetype-dev libpng-dev libjpeg-turbo-dev
+
 
 COPY ./ext /tmp/ext
 WORKDIR /tmp/ext
@@ -12,6 +19,18 @@ WORKDIR /tmp/ext
 RUN chmod +x install.sh \
     && sh install.sh \
     && rm -rf /tmp/ext
+
+# phpy
+RUN git clone https://github.com/swoole/phpy.git /tmp/phpy && \
+    cd /tmp/phpy && \
+    docker-php-source extract && \
+    phpize && \
+    ./configure --with-python-config=/usr/bin/python3-config && \
+    make && make install && \
+    docker-php-ext-enable phpy && \
+    rm -rf /tmp/phpy
+
+RUN apk del .build-deps && docker-php-source delete
 
 RUN apk --no-cache add tzdata \
     && cp "/usr/share/zoneinfo/$TIMEZONE" /etc/localtime \

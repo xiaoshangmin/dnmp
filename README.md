@@ -57,10 +57,10 @@ mbstring
 mysqli
 mysqlnd
 openssl
-protobuf
 pcntl
 pcre
 PDO
+phpy
 pdo_mysql
 pdo_sqlite
 Phar
