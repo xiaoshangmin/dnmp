@@ -22,5 +22,5 @@ pecl install redis
 docker-php-ext-enable redis
 pecl install -D 'enable-sockets="yes" enable-openssl="yes" enable-http2="yes" enable-mysqlnd="yes" enable-swoole-json="no"' swoole
 docker-php-ext-enable swoole
-
+docker-php-source delete
 
