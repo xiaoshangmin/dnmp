@@ -6,16 +6,9 @@ LABEL maintainer="shangminxiao@gmail.com"
 
 RUN sed -i "s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g" /etc/apk/repositories
 
-RUN apk --update add --no-cache --virtual .build-deps git autoconf m4 g++ libtool make curl-dev linux-headers build-base && \
+RUN set -ex && \
+    apk --update add --no-cache --virtual .build-deps git autoconf m4 g++ libtool make curl-dev linux-headers build-base && \
     apk --no-cache add python3 python3-dev py3-pip file-dev imagemagick-dev imagemagick freetype freetype-dev gettext-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libwebp-dev icu-dev libxml2-dev libzip-dev
-
-
-COPY ./ext /tmp/ext
-WORKDIR /tmp/ext
-
-RUN chmod +x install.sh \
-    && sh install.sh \
-    && rm -rf /tmp/ext
 
 # phpy
 RUN git clone https://github.com/swoole/phpy.git /tmp/phpy && \
@@ -26,6 +19,13 @@ RUN git clone https://github.com/swoole/phpy.git /tmp/phpy && \
     make && make install && \
     docker-php-ext-enable phpy && \
     rm -rf /tmp/phpy
+
+COPY ./ext /tmp/ext
+WORKDIR /tmp/ext
+
+RUN chmod +x install.sh \
+    && sh install.sh \
+    && rm -rf /tmp/ext
 
 RUN apk del .build-deps freetype-dev libpng-dev libjpeg-turbo-dev && docker-php-source delete
 
