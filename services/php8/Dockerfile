@@ -7,8 +7,8 @@ LABEL maintainer="shangminxiao@gmail.com"
 RUN sed -i "s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g" /etc/apk/repositories
 
 RUN set -ex && \
-    apk --update add --no-cache --virtual .build-deps git autoconf m4 g++ libtool make curl-dev linux-headers build-base && \
-    apk --no-cache add python3 python3-dev py3-pip file-dev imagemagick-dev imagemagick freetype freetype-dev gettext-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libwebp-dev icu-dev libxml2-dev libzip-dev
+    apk --update add --no-cache --virtual .build-deps autoconf m4 g++ libtool make curl-dev linux-headers build-base && \
+    apk --no-cache add python3 python3-dev py3-pip git file-dev imagemagick-dev imagemagick freetype freetype-dev gettext-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libwebp-dev icu-dev libxml2-dev libzip-dev
 
 # phpy
 RUN git clone https://github.com/swoole/phpy.git /tmp/phpy && \
