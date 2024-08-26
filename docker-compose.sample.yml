@@ -46,6 +46,7 @@ services:
       - ${MYSQL_CONF_DIR}/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
       - ${MYSQL_LIB_DIR}:/var/lib/mysql:rw
     environment:
+      MYSQL_SQL_MODE: STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       TZ: "${TIMEZONE}"
     networks:
