@@ -20,8 +20,8 @@ pecl channel-update pecl.php.net
 #docker-php-ext-enable imagick
 pecl install phpy
 docker-php-ext-enable phpy
-pecl install ffmpeg
-docker-php-ext-enable ffmpeg
+# pecl install ffmpeg
+# docker-php-ext-enable ffmpeg
 pecl install redis
 docker-php-ext-enable redis
 pecl install -D 'enable-sockets="yes" enable-openssl="yes" enable-http2="yes" enable-mysqlnd="yes" enable-swoole-json="no"' swoole
