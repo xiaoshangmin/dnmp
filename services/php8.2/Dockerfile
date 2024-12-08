@@ -5,39 +5,47 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 LABEL maintainer="shangminxiao@gmail.com"
 
+RUN ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
+    && echo "${TIMEZONE}" > /etc/timezone
 
 RUN curl https://chsrc.run/posix | bash && \
     chsrc set debian
-# echo "deb http://deb.debian.org/debian bookworm main" > /etc/apt/sources.list && \
-# echo "deb http://deb.debian.org/debian bookworm-updates main" >> /etc/apt/sources.list && \
-# echo "deb http://security.debian.org/debian-security bookworm-security main" >> /etc/apt/sources.list && \
-# sed -i 's|http://deb.debian.org/debian|http://mirrors.aliyun.com/debian|g' /etc/apt/sources.list && \
-# sed -i 's|http://security.debian.org/debian-security|http://mirrors.aliyun.com/debian-security|g' /etc/apt/sources.list && \
 
 RUN set -ex && \
     apt update && \
     apt install -y --no-install-recommends libssl-dev git python3 python3-pip python3-dev libpng-dev libwebp-dev libjpeg-dev libfreetype6-dev \
-        libicu-dev libxml2 libxml2-dev libzip-dev ffmpeg && \ 
-        rm -rf /var/lib/apt/lists/*
-        
-#imagemagick libmagickwand-dev libmagickcore-dev libmagick++-dev 
+        libicu-dev libxml2 libxml2-dev libzip-dev ffmpeg \ 
+        && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+        && docker-php-ext-install -j$(nproc) \
+            gd \
+            pcntl \
+            pdo_mysql \
+            mysqli \
+            exif \
+            sockets \
+            gettext \
+            intl \
+            soap \
+            bcmath \
+            opcache \
+            zip  \
+        && apt-get clean  \
+        && rm -rf /var/lib/apt/lists/*
 
-# phpy
-# RUN git clone https://github.com/swoole/phpy.git /tmp/phpy && \
-#     cd /tmp/phpy && \
-#     docker-php-source extract && \
-#     phpize && \
-#     ./configure --with-python-config=/usr/bin/python3-config && \
-#     make && make install && \
-#     docker-php-ext-enable phpy && \
-#     rm -rf /tmp/phpy
+RUN set -ex \
+    && pecl channel-update pecl.php.net \
+    && pecl install phpy redis \
+    && pecl install -D 'enable-sockets="yes" enable-openssl="yes" enable-http2="yes" enable-mysqlnd="yes" enable-swoole-json="no"' swoole \
+    && docker-php-ext-enable phpy redis swoole \
+    && docker-php-source delete \
+    && rm -rf /tmp/*
 
-COPY ./ext /tmp/ext
-WORKDIR /tmp/ext
+# COPY ./ext /tmp/ext
+# WORKDIR /tmp/ext
 
-RUN chmod +x install.sh \
-    && sh install.sh \
-    && rm -rf /tmp/ext
+# RUN chmod +x install.sh \
+#     && sh install.sh \
+#     && rm -rf /tmp/ext
 
 RUN curl -o /usr/bin/composer https://mirrors.aliyun.com/composer/composer.phar \
     && chmod +x /usr/bin/composer \
