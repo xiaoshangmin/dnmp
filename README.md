@@ -39,18 +39,20 @@ ELK + FILEBEAT
 
 ## 1.1 php -m
 ```
-bcmath       
+bcmath
 Core
-ctype        
+ctype
 curl
 date
 dom
 exif
 fileinfo
 filter
-ftp
+gd
+gettext
 hash
 iconv
+intl
 json
 libxml
 mbstring
@@ -60,16 +62,18 @@ openssl
 pcntl
 pcre
 PDO
-phpy
 pdo_mysql
 pdo_sqlite
 Phar
+phpy
 posix
+random
 readline
 redis
 Reflection
 session
 SimpleXML
+soap
 sockets
 sodium
 SPL
@@ -77,11 +81,11 @@ sqlite3
 standard
 swoole
 tokenizer
-yac
 xml
 xmlreader
 xmlwriter
 Zend OPcache
+zip
 zlib
 ```
 

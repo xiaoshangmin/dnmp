@@ -78,6 +78,20 @@ services:
     tty: true
     networks:
       - elk
+  stirling-pdf:
+    image: stirlingtools/stirling-pdf:latest
+    ports:
+      - '8080:8080'
+    volumes:
+      - ${DATA_DIR}/spdf/trainingData:/usr/share/tessdata #Required for extra OCR languages
+      - ${DATA_DIR}/spdf/extraConfigs:/configs
+#      - /location/of/customFiles:/customFiles/
+#      - /location/of/logs:/logs/
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
+      - INSTALL_BOOK_AND_ADVANCED_HTML_OPS=false
+    networks:
+      - elk
   # rabbitmq:
   #   image: xiaoshangmin/rabbitmq
   #   container_name: rabbitmq

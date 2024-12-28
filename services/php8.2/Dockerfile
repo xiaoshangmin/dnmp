@@ -14,7 +14,7 @@ RUN curl https://chsrc.run/posix | bash && \
 RUN set -ex && \
     apt update && \
     apt install -y --no-install-recommends libssl-dev git python3 python3-pip python3-dev libpng-dev libwebp-dev libjpeg-dev libfreetype6-dev \
-        libicu-dev libxml2 libxml2-dev libzip-dev ffmpeg \ 
+        libicu-dev libxml2 libxml2-dev libzip-dev ffmpeg gifsicle \ 
         && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
         && docker-php-ext-install -j$(nproc) \
             gd \
@@ -39,13 +39,6 @@ RUN set -ex \
     && docker-php-ext-enable phpy redis swoole \
     && docker-php-source delete \
     && rm -rf /tmp/*
-
-# COPY ./ext /tmp/ext
-# WORKDIR /tmp/ext
-
-# RUN chmod +x install.sh \
-#     && sh install.sh \
-#     && rm -rf /tmp/ext
 
 RUN curl -o /usr/bin/composer https://mirrors.aliyun.com/composer/composer.phar \
     && chmod +x /usr/bin/composer \
