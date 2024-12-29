@@ -5,6 +5,7 @@ ELK + FILEBEAT
 
 ```
 ├── data                        数据库数据目录
+│   ├── caddy                   caddy 配置文件
 │   ├── composer                composer 数据目录
 │   ├── esdata                  elasticsearch 数据目录
 │   ├── mysql                   MySQL8 数据目录
