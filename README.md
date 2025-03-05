@@ -130,3 +130,8 @@ zlib
     https://raw.githubusercontent.com/alibaba/nacos/develop/distribution/conf/mysql-schema.sql
     配置nacos持久化，修改conf/application.properties文件，增加支持mysql数据源配置
     在浏览器中访问：http://localhost:8848/nacos/index.html#/login   nacos/nacos
+
+
+
+## 其他作品
+- **[拼字幕](https://labs.wowyou.cc/pinzimu)
