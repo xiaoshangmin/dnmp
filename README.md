@@ -135,4 +135,4 @@ zlib
 
 ## 其他作品
 
-  - **[拼字幕](https://labs.wowyou.cc/pinzimu)**
+  - **[QuoteMaker](https://quotemaker.cc/)**
