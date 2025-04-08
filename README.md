@@ -135,5 +135,5 @@ zlib
 
 ## 其他作品
 
-  - **[QuoteMaker](https://quotemaker.cc/)**
-  - **[Cal.com](https://cal.com/xxxxxxxxx-xiao-c0dtao)**
+  - **[QuoteMaker](https://quotemaker.cc)**
+  - **[Batch Image Compression](https://image.wowyou.cc)**
