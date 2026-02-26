@@ -37,30 +37,30 @@ services:
     networks:
       - elk
   #docker-compose exec certbot certbot certonly --webroot -w /var/www/certbot -d example.com
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - ${OPENRESTY_CONF_DIR}/cert:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-    networks:
-       - elk
-  mysql:
-    image: ${MYSQL_VERSION}
-    container_name: mysql
-    restart: always
-    ports:
-      - "3306:3306"
-    volumes:
-      - ${MYSQL_CONF_DIR}/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
-      - ${MYSQL_LIB_DIR}:/var/lib/mysql:rw
-    environment:
-      MYSQL_SQL_MODE: STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
-      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-      TZ: "${TIMEZONE}"
-    networks:
-      - elk
+  # certbot:
+  #   image: certbot/certbot
+  #   container_name: certbot
+  #   volumes:
+  #     - ${OPENRESTY_CONF_DIR}/cert:/etc/letsencrypt
+  #     - ./data/certbot/www:/var/www/certbot
+  #   entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+  #   networks:
+  #      - elk
+  # mysql:
+  #   image: ${MYSQL_VERSION}
+  #   container_name: mysql
+  #   restart: always
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - ${MYSQL_CONF_DIR}/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+  #     - ${MYSQL_LIB_DIR}:/var/lib/mysql:rw
+  #   environment:
+  #     MYSQL_SQL_MODE: STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+  #     MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+  #     TZ: "${TIMEZONE}"
+  #   networks:
+  #     - elk
   redis:
     image: ${REDIS_VERSION}
     container_name: redis
@@ -74,53 +74,52 @@ services:
       TZ: "${TIMEZONE}"
     networks:
       - elk
-  nacos:
-    image: ${NACOS_VERSION}
-    container_name: nacos
-    restart: on-failure
-    ports:
-      - "8849:8849"
-      - "8848:8848"
-    volumes:
-      - ${LOG_DIR}/nacos/:/home/nacos/logs
-      - ${NACOS_CONF_DIR}/conf/application.properties:/home/nacos/conf/application.properties
-    depends_on:
-      - "mysql"
-    tty: true
-    networks:
-      - elk
-  caddy:
-    image: caddy:latest
-    container_name: caddy
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ${DATA_DIR}/caddy/Caddyfile:/etc/caddy/Caddyfile
-      - ${DATA_DIR}/caddy/caddy_data:/data
-      - ${DATA_DIR}/caddy/caddy_config:/config
-    networks:
-      - elk
-  stirling-pdf:
-    image: stirlingtools/stirling-pdf:latest #frooodle/s-pdf:0.29.0
-    deploy:
-      resources:
-        limits:
-          memory: 4G
-    ports:
-      - '8080:8080'
-    restart: on-failure:5
-    volumes:
-      - ${DATA_DIR}/spdf/trainingData:/usr/share/tessdata #Required for extra OCR languages
-      - ${DATA_DIR}/spdf/extraConfigs:/configs
-      -  ${DATA_DIR}/spdf/customFiles:/customFiles/
-#      - /location/of/logs:/logs/
-    environment:
-      - DOCKER_ENABLE_SECURITY=false
-      - SECURITY_ENABLELOGIN=false
-    networks:
-      - elk
+  # nacos:
+  #   image: ${NACOS_VERSION}
+  #   container_name: nacos
+  #   restart: on-failure
+  #   ports:
+  #     - "8849:8849"
+  #     - "8848:8848"
+  #   volumes:
+  #     - ${LOG_DIR}/nacos/:/home/nacos/logs
+  #     - ${NACOS_CONF_DIR}/conf/application.properties:/home/nacos/conf/application.properties
+  #   depends_on:
+  #     - "mysql"
+  #   tty: true
+  #   networks:
+  #     - elk
+  # caddy:
+  #   image: caddy:latest
+  #   container_name: caddy
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ${DATA_DIR}/caddy/Caddyfile:/etc/caddy/Caddyfile
+  #     - ${DATA_DIR}/caddy/caddy_data:/data
+  #     - ${DATA_DIR}/caddy/caddy_config:/config
+  #   networks:
+  #     - elk
+  # stirling-pdf:
+  #   image: stirlingtools/stirling-pdf:latest #frooodle/s-pdf:0.29.0
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 4G
+  #   ports:
+  #     - '8080:8080'
+  #   restart: on-failure:5
+  #   volumes:
+  #     - ${DATA_DIR}/spdf/trainingData:/usr/share/tessdata #Required for extra OCR languages
+  #     - ${DATA_DIR}/spdf/extraConfigs:/configs
+  #     -  ${DATA_DIR}/spdf/customFiles:/customFiles/
+  #   environment:
+  #     - DOCKER_ENABLE_SECURITY=false
+  #     - SECURITY_ENABLELOGIN=false
+  #   networks:
+  #     - elk
   # rabbitmq:
   #   image: xiaoshangmin/rabbitmq
   #   container_name: rabbitmq
