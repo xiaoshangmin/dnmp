@@ -22,6 +22,7 @@ services:
     image: ${OPENRESTY_VERSION}
     container_name: openresty
     restart: always
+    # command: "/bin/sh -c 'while :; do sleep 30d & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     ports:
       - "80:80"
       - "443:443"
@@ -36,31 +37,31 @@ services:
       TZ: "${TIMEZONE}"
     networks:
       - elk
-  #docker-compose exec certbot certbot certonly --webroot -w /var/www/certbot -d example.com
-  # certbot:
-  #   image: certbot/certbot
-  #   container_name: certbot
-  #   volumes:
-  #     - ${OPENRESTY_CONF_DIR}/cert:/etc/letsencrypt
-  #     - ./data/certbot/www:/var/www/certbot
-  #   entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-  #   networks:
-  #      - elk
-  # mysql:
-  #   image: ${MYSQL_VERSION}
-  #   container_name: mysql
-  #   restart: always
-  #   ports:
-  #     - "3306:3306"
-  #   volumes:
-  #     - ${MYSQL_CONF_DIR}/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
-  #     - ${MYSQL_LIB_DIR}:/var/lib/mysql:rw
-  #   environment:
-  #     MYSQL_SQL_MODE: STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
-  #     MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-  #     TZ: "${TIMEZONE}"
-  #   networks:
-  #     - elk
+  # docker-compose exec certbot certbot certonly --webroot -w /var/www/certbot -d example.com
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ${OPENRESTY_CONF_DIR}/cert:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    networks:
+       - elk
+  mysql:
+    image: ${MYSQL_VERSION}
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ${MYSQL_CONF_DIR}/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+      - ${MYSQL_LIB_DIR}:/var/lib/mysql:rw
+    environment:
+      MYSQL_SQL_MODE: STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      TZ: "${TIMEZONE}"
+    networks:
+      - elk
   redis:
     image: ${REDIS_VERSION}
     container_name: redis
@@ -74,135 +75,7 @@ services:
       TZ: "${TIMEZONE}"
     networks:
       - elk
-  # nacos:
-  #   image: ${NACOS_VERSION}
-  #   container_name: nacos
-  #   restart: on-failure
-  #   ports:
-  #     - "8849:8849"
-  #     - "8848:8848"
-  #   volumes:
-  #     - ${LOG_DIR}/nacos/:/home/nacos/logs
-  #     - ${NACOS_CONF_DIR}/conf/application.properties:/home/nacos/conf/application.properties
-  #   depends_on:
-  #     - "mysql"
-  #   tty: true
-  #   networks:
-  #     - elk
-  # caddy:
-  #   image: caddy:latest
-  #   container_name: caddy
-  #   restart: unless-stopped
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - ${DATA_DIR}/caddy/Caddyfile:/etc/caddy/Caddyfile
-  #     - ${DATA_DIR}/caddy/caddy_data:/data
-  #     - ${DATA_DIR}/caddy/caddy_config:/config
-  #   networks:
-  #     - elk
-  # stirling-pdf:
-  #   image: stirlingtools/stirling-pdf:latest #frooodle/s-pdf:0.29.0
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 4G
-  #   ports:
-  #     - '8080:8080'
-  #   restart: on-failure:5
-  #   volumes:
-  #     - ${DATA_DIR}/spdf/trainingData:/usr/share/tessdata #Required for extra OCR languages
-  #     - ${DATA_DIR}/spdf/extraConfigs:/configs
-  #     -  ${DATA_DIR}/spdf/customFiles:/customFiles/
-  #   environment:
-  #     - DOCKER_ENABLE_SECURITY=false
-  #     - SECURITY_ENABLELOGIN=false
-  #   networks:
-  #     - elk
-  # rabbitmq:
-  #   image: xiaoshangmin/rabbitmq
-  #   container_name: rabbitmq
-  #   restart: always
-  #   ports:
-  #     - "5672:5672"
-  #     - "15672:15672"
-  #   volumes:
-  #     - ./data/rabbitmq:/var/lib/rabbitmq/mnesia:rw
-  #     - ./logs/rabbitmq:/var/log/rabbitmq:rw
-  #     - ./rabbitmq/etc/:/etc/rabbitmq:rw
-  #   environment:
-  #     - RABBITMQ_DEFAULT_USER=admin
-  #     - RABBITMQ_DEFAULT_PASS=admin
-  #   networks: 
-  #     - "default"
-  # elasticsearch:
-  #   image: elasticsearch:7.17.5
-  #   container_name: elasticsearch
-  #   hostname: elasticsearch
-  #   restart: always
-  #   volumes:
-  #     #多个容器之间共享数据卷，须在顶级的 volumes 节点中定义这个数据卷elasticsearch
-  #     - elasticsearch:/usr/share/elasticsearch/data:z
-  #     - ./data/esdata:/usr/share/elasticsearch/data:z
-  #     - ./elk/es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
-  #   environment:
-  #     discovery.type: single-node
-  #     ES_JAVA_OPTS: -Xmx512m -Xms512m
-  #   ports:
-  #     - "9200:9200"
-  #     - "9300:9300"
-  #   networks:
-  #     - elk
-  # filebeat:
-  #   image: elastic/filebeat:7.17.5
-  #   container_name: filebeat
-  #   user: root
-  #   volumes:
-  #     - ./elk/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro 
-  #     - /var/lib/docker/containers:/var/lib/docker/containers:ro 
-  #   networks:
-  #     - "default"
-  #   depends_on:
-  #     - "logstash"
-#   logstash:
-#     image: logstash:7.17.5
-#     container_name: logstash
-#     hostname: logstash
-#     restart: always
-#     volumes:
-#       - ./elk/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
-#       - ./elk/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
-#       - ${LOG_DIR}/nginx:/var/log/nginx:rw
-#     environment:
-#       LS_JAVA_OPTS: -Xmx512m -Xms512m
-#     ports:
-#       - "5044:5044"
-#       - "5000:5000/tcp"
-#       - "5000:5000/udp"
-#       - "9600:9600"
-#     networks:
-#       - elk
-#     depends_on:
-#       - elasticsearch
-#   kibana:
-#     image: kibana:7.17.5
-#     container_name: kibana
-#     hostname: kibana
-#     restart: always
-#     volumes:
-#       - ./elk/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
-#     ports:
-#       - "5601:5601"
-#     environment:
-#       I18N_LOCALE: "zh-CN"
-#       elasticsearch.hosts: http://elasticsearch:9200
-#     depends_on:
-#       - elasticsearch
-#     networks:
-#       - elk
-# volumes:
-#   elasticsearch:
+  
 networks:
   elk:
     driver: bridge
