@@ -1,18 +1,16 @@
 # DNMP (Docker + OpenResty + MySQL + PHP + Redis)
 
-DNMP 是一个基于 Docker 的高性能 PHP 开发和运行环境，集成了 OpenResty、MySQL、PHP、Redis、RabbitMQ、Nacos 以及 ELK 等常用组件。它旨在提供一个开箱即用、灵活可扩展的本地及生产环境解决方案。
+DNMP 是一个基于 Docker 的 PHP 开发和运行环境，包含 OpenResty、PHP、MySQL、Redis 和 Certbot，适合快速搭建本地及生产环境。
 
 ---
 
 ## 🚀 核心组件
 
 - **OpenResty**: 基于 Nginx 的高性能 Web 平台，预配置了自动重载机制。
-- **PHP**: 提供多版本支持（7.4, 8.0, 8.2），预装常用扩展（Swoole, Redis, PDO 等）。
-- **MySQL**: 默认使用 8.0，支持灵活切换至 5.7。
+- **PHP**: 支持通过环境变量切换 PHP 镜像版本，并预装常用扩展（Swoole、Redis、PDO 等）。
+- **MySQL**: 提供 MySQL 8.0 环境，并保留旧版本切换配置。
 - **Redis**: 高性能 Key-Value 数据库。
-- **Nacos**: 服务发现与配置管理平台。
-- **ELK Stack**: 完整的日志分析系统（Elasticsearch, Logstash, Kibana）。
-- **RabbitMQ**: 消息中间件。
+- **Certbot**: 用于申请和自动续期 Let's Encrypt SSL 证书。
 
 ---
 
@@ -27,8 +25,8 @@ DNMP 是一个基于 Docker 的高性能 PHP 开发和运行环境，集成了 O
 │   ├── php8.2/                 # PHP 8.2 配置
 │   ├── mysql/                  # MySQL 8.0 配置
 │   └── redis/                  # Redis 配置
-├── data/                       # 持久化数据目录 (MySQL, Redis, ES 等)
-├── logs/                       # 日志目录 (Nginx, PHP, RabbitMQ 等)
+├── data/                       # 持久化数据目录 (MySQL, Redis, Certbot 等)
+├── logs/                       # 日志目录 (OpenResty, PHP 等)
 ├── www/                        # PHP 项目代码目录
 └── docker-compose.sample.yml   # 配置文件示例
 ```
@@ -57,9 +55,7 @@ docker-compose up -d                                    # 守护进程模式运�
 
 ### 4. 访问测试
 - **PHP**: `http://localhost` (代码位于 `./www/index.php`)
-- **RabbitMQ**: `http://localhost:15672` (默认帐号: `admin/admin`)
-- **Kibana**: `http://localhost:5601`
-- **Nacos**: `http://localhost:8848/nacos` (默认帐号: `nacos/nacos`)
+- **OpenResty**: `http://localhost` 或 `https://localhost`（配置域名和证书后使用）
 
 ---
 
@@ -87,16 +83,15 @@ docker exec -it mysql bash  # 进入 MySQL 容器
 ## 🔒 证书与自动化
 
 ### OpenResty 自动重载
-为了支持 SSL 证书（如 Let's Encrypt）的自动更新，OpenResty 容器内置了自动重载机制：
-- **频率**: 每 30 天自动执行 `nginx -s reload`。
-- **优点**: 无需重启容器即可应用新证书，确保服务零停机。
+OpenResty 容器会定期执行 `nginx -s reload`，无需重启容器即可加载更新后的证书。
 
 ### Certbot 证书申请
-项目中包含 `certbot` 服务（默认注释），可用于申请免费证书：
+项目中包含 `certbot` 服务，可用于申请和续期免费证书。首次申请证书时执行一次：
 ```bash
 # 示例命令
 docker-compose exec certbot certbot certonly --webroot -w /var/www/certbot -d yourdomain.com
 ```
+首次申请成功后，Certbot 容器会每 12 小时执行 `certbot renew`。证书续期成功后，OpenResty 会在下一次 reload 时自动加载新证书。
 
 ---
 
@@ -107,6 +102,7 @@ docker-compose exec certbot certbot certonly --webroot -w /var/www/certbot -d yo
 - **停止所有服务**: `docker-compose stop`
 - **重启特定服务**: `docker-compose restart openresty`
 - **更新镜像并重新启动**: `docker-compose pull && docker-compose up -d`
+- **查看 Certbot 日志**: `docker-compose logs -f certbot`
 
 ---
 
